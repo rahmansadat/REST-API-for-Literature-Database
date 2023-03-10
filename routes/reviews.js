@@ -1,6 +1,7 @@
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const model = require('../models/reviews');
+const auth = require('../controllers/auth');
 
 const router = Router({prefix: '/api/v1/reviews'});
 
