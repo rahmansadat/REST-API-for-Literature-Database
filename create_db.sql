@@ -23,7 +23,7 @@ CREATE TABLE users (
     email VARCHAR(64) UNIQUE NOT NULL,
     avatarURL VARCHAR(64),
     PRIMARY KEY (ID),
-    FOREIGN KEY (role) REFERENCES roles (name));
+    FOREIGN KEY (role) REFERENCES roles (name) ON DELETE CASCADE);
 
 CREATE TABLE genres (
     ID INT NOT NULL AUTO_INCREMENT,
@@ -46,7 +46,7 @@ CREATE TABLE books (
     datePublished DATE,
     isbn TEXT,
     imageURL VARCHAR(2048),
-    authorID INT,
+    authorID INT NOT NULL,
     genreID INT,
     PRIMARY KEY (ID),
     FOREIGN KEY (authorID) REFERENCES users (ID) ON DELETE CASCADE,
@@ -63,7 +63,6 @@ CREATE TABLE reviews (
     PRIMARY KEY (ID),
     FOREIGN KEY (userID) REFERENCES users (ID) ON DELETE CASCADE,
     FOREIGN KEY (bookID) REFERENCES books (ID) ON DELETE CASCADE);
-
 
 -- Code to populate database.
 
