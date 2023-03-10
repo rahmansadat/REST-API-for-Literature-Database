@@ -1,4 +1,5 @@
 const db = require('../helpers/database');
+const bcrypt = require('bcrypt')
 
 // Get a single user by their id
 exports.getById = async function getById (id) {
