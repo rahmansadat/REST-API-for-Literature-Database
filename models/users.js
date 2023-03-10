@@ -39,3 +39,11 @@ exports.deleteById = async function deleteById (id) {
     let data = await db.run_query(query, values);
     return data;
 }
+
+// Get a single user by their username
+exports.getByUsername = async function getByUsername (username) {
+    let query = "SELECT * FROM users WHERE username = ?";
+    let values = [username];
+    let data = await db.run_query(query, values);
+    return data;
+}
