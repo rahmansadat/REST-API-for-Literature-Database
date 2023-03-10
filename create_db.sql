@@ -43,7 +43,7 @@ CREATE TABLE books (
     ID INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(32) NOT NULL,
     summary TEXT,
-    datePublished DATETIME,
+    datePublished DATE,
     isbn TEXT,
     imageURL VARCHAR(2048),
     authorID INT,
