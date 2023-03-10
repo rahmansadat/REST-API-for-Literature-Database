@@ -18,6 +18,11 @@ exports.getAll = async function getAll (limit, order) {
 
 // Create a new user
 exports.add = async function add (user) {
+    const password = user.password
+    const salt = bcrypt.genSaltSync();
+    const hash = bcrypt.hashSync(password, salt);
+    user.password = hash
+
     let query = "INSERT INTO users SET ?";
     let values = [user]
     let data = await db.run_query(query, values);
