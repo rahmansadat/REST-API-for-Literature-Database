@@ -10,7 +10,7 @@ exports.getById = async function getById (id) {
 
 // Get all books
 exports.getAll = async function getAll (limit, order) {
-    let query = "SELECT * FROM books ORDER BY ?? LIMIT ?;";
+    let query = "SELECT * FROM books ORDER BY ?? LIMIT ?";
     let values = [order,  limit];
     let data = await db.run_query(query, values);
     return data;
