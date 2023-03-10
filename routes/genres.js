@@ -5,10 +5,10 @@ const model = require('../models/genres');
 const router = Router({prefix: '/api/v1/genres'});
 
 router.get('/', getAll);
-router.post('/', bodyParser(), createGenre);
+router.post('/', auth, bodyParser(), createGenre);
 router.get('/:id([0-9]{1,})', getById);
-router.put('/:id([0-9]{1,})', bodyParser(), updateGenre);
-router.del('/:id([0-9]{1,})', deleteGenre);
+router.put('/:id([0-9]{1,})', auth, bodyParser(), updateGenre);
+router.del('/:id([0-9]{1,})', auth, deleteGenre);
 
 async function getAll(ctx) {
     let limit = 10; // number of records to return

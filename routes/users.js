@@ -4,11 +4,11 @@ const model = require('../models/users');
 
 const router = Router({prefix: '/api/v1/users'});
 
-router.get('/', getAll);
+router.get('/', auth, getAll);
 router.post('/', bodyParser(), createUser);
-router.get('/:id([0-9]{1,})', getById);
-router.put('/:id([0-9]{1,})', bodyParser(), updateUser);
-router.del('/:id([0-9]{1,})', deleteUser);
+router.get('/:id([0-9]{1,})', auth, getById);
+router.put('/:id([0-9]{1,})', auth, bodyParser(), updateUser);
+router.del('/:id([0-9]{1,})', auth, deleteUser);
 
 async function getAll(ctx) {
     let limit = 10; // number of records to return

@@ -5,10 +5,10 @@ const model = require('../models/authors');
 const router = Router({prefix: '/api/v1/authors'});
 
 router.get('/', getAll);
-router.post('/', bodyParser(), createAuthor);
+router.post('/', auth, bodyParser(), createAuthor);
 router.get('/:id([0-9]{1,})', getById);
-router.put('/:id([0-9]{1,})', bodyParser(), updateAuthor);
-router.del('/:id([0-9]{1,})', deleteAuthor);
+router.put('/:id([0-9]{1,})', auth, bodyParser(), updateAuthor);
+router.del('/:id([0-9]{1,})', auth, deleteAuthor);
 
 async function getAll(ctx) {
     let limit = 10; // number of records to return

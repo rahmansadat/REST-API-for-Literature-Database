@@ -5,10 +5,10 @@ const model = require('../models/reviews');
 const router = Router({prefix: '/api/v1/reviews'});
 
 router.get('/', getAll);
-router.post('/', bodyParser(), createReview);
+router.post('/', auth, bodyParser(), createReview);
 router.get('/:id([0-9]{1,})', getById);
-router.put('/:id([0-9]{1,})', bodyParser(), updateReview);
-router.del('/:id([0-9]{1,})', deleteReview);
+router.put('/:id([0-9]{1,})', auth, bodyParser(), updateReview);
+router.del('/:id([0-9]{1,})', auth, deleteReview);
 
 async function getAll(ctx) {
     let limit = 10; // number of records to return
