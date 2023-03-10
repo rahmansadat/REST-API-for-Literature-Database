@@ -1,0 +1,141 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Book database API
+  description: A simple back-end book database API.
+  contact:
+    name: Sadat Rahman
+    email: rahmans22@uni.coventry.ac.uk
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: 'https://presentjoin-enjoyjudge-3000.codio-box.uk/api/v1'
+    description: Development server
+tags:
+  - name: Users
+    description: Manage users.
+  - name: Books
+    description: Perform CRUD operations on books.
+  - name: Authors
+    description: Perform CRUD operations on authors.
+  - name: Genres
+    description: Perform CRUD operations on genres.
+  - name: Reviews
+    description: Perform CRUD operations on reviews.
+paths:
+  /users/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Numeric id of user
+    get:
+      tags:
+        - Users
+      description: Get user by ID.
+      responses:
+        '200':
+          description: View of a user's record.
+        '401':
+          description: Non-admin users can only view their own record.
+        '404':
+          description: User not found.
+    put:
+      tags:
+        - Users
+      description: Update user by ID.
+      responses:
+        '200':
+          description: Update confirmation and link to record.
+        '404':
+          description: User was not found in the DB.
+    delete:
+      tags:
+        - Users
+      description: Delete user by ID.
+      responses:
+        '200':
+          description: Delete confirmation.
+        '401':
+          description: Only admin users can delete user accounts.
+        '404':
+          description: User not found.
+  /users:
+    summary: Represents an individual user
+    description: >
+      This resource represents an individual user in the system.
+      Each user is identified by a numeric `id`.
+    post:
+      tags:
+        - Users
+      description: Create a new user account.
+      requestBody:
+        description: New user data.
+        required: true
+      responses:
+        '201':
+          description: User created.
+  /books:
+    get:
+      tags:
+        - Books
+      description: Get all books.
+      responses:
+        '201':
+          description: View of all books.
+        '404':
+          description: Book not found.
+    post:
+      tags:
+        - Books
+      description: Create a new book.
+      requestBody:
+        description: New book data.
+        required: true
+      responses:
+        '201':
+          description: Book created.
+        '401':
+          description: Non-admin users cannot create books.
+  /books/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: Numeric id of book
+    get:
+      tags:
+        - Books
+      description: Get book by ID.
+      responses:
+        '200':
+          description: View of a book.
+        '404':
+          description: Book not found.
+    put:
+      tags:
+        - Books
+      description: Update book by ID.
+      responses:
+        '200':
+          description: Update confirmation and link to record.
+        '401':
+          description: Non-admin users cannot update books.
+        '404':
+          description: Book not found.
+    delete:
+      tags:
+        - Books
+      description: Delete book by ID.
+      responses:
+        '200':
+          description: Delete confirmation.
+        '401':
+          description: Non-admin users cannot delete books.
+        '404':
+          description: Book not found.
