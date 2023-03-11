@@ -7,6 +7,8 @@ const reviewSchema = require('../schemas/review.json').definitions.review;
 const reviewUpdateSchema = require('../schemas/review.json').definitions.reviewUpdate;
 const authorSchema = require('../schemas/author.json').definitions.author;
 const authorUpdateSchema = require('../schemas/author.json').definitions.authorUpdate;
+const userSchema = require('../schemas/user.json').definitions.user;
+const userUpdateSchema = require('../schemas/user.json').definitions.userUpdate;
 
 const validatorFactory = (schema) => {
     const middlewareHandler = async (ctx, next) => {
@@ -42,3 +44,5 @@ exports.validateReview = validatorFactory(reviewSchema);
 exports.validateReviewUpdate = validatorFactory(reviewUpdateSchema);
 exports.validateAuthor = validatorFactory(authorSchema);
 exports.validateAuthorUpdate = validatorFactory(authorUpdateSchema);
+exports.validateUser = validatorFactory(userSchema);
+exports.validateUserUpdate = validatorFactory(userUpdateSchema);
