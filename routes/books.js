@@ -59,7 +59,6 @@ async function updateBook(ctx){
     let result = await model.getById(id);
 
     if (result.length) {
-        let data = result[0];
         let permission = can.update(ctx.state.user);
 
         if (!permission.granted) {
@@ -84,7 +83,6 @@ async function deleteBook(ctx){
     let result = await model.getById(id);
 
     if (result.length) {
-        let data = result[0];
         let permission = can.delete(ctx.state.user);
 
         if (!permission.granted) {

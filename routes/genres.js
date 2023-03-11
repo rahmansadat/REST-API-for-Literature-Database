@@ -59,7 +59,6 @@ async function updateGenre(ctx){
     let result = await model.getById(id);
 
     if (result.length) {
-        let data = result[0];
         let permission = can.update(ctx.state.user);
 
         if (!permission.granted) {
@@ -84,13 +83,11 @@ async function deleteGenre(ctx){
     let result = await model.getById(id);
 
     if (result.length) {
-        let data = result[0];
         let permission = can.delete(ctx.state.user);
 
         if (!permission.granted) {
             ctx.status = 403;
         } else {
-
             let result = await model.deleteById(id);
             if (result.affectedRows) {
                 ctx.body = {ID: id, deleted: true};
