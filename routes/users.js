@@ -17,17 +17,18 @@ async function getAll(ctx) {
     let limit = 10; // number of records to return
     let order = 'username'; // order based on specified column
 
-    let permission = can.readAll(ctx.state.user);
-    if (!permission.granted) {
-        ctx.status = 403;
-    } else {
-        let result = await model.getAll(limit, order);
-        if (result.length) {
+    let result = await model.getAll(limit, order);
+    if (result.length) {
+        let data = result;
+        let permission = can.update(ctx.state.user, data);
+        if (!permission.granted) {
+            ctx.status = 403;
+        } else {
             ctx.body = result;
             ctx.status = 200;
-        } else {
-            ctx.status = 404;
         }
+    } else {
+        ctx.status = 404;
     }
 }
 
