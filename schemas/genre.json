@@ -1,0 +1,49 @@
+{
+    "schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "genre": {
+            "id": "/genre",
+            "title": "Genre",
+            "description": "Data to create a new genre",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name of the genre",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Short description of the genre",
+                    "type": "string"
+                },
+                "imageURL": {
+                    "description": "URL for genre image",
+                    "type": "uri"
+                }
+            },
+            "required": ["name"],
+            "additionalProperties": false
+        },
+        
+        "genreUpdate": {
+            "id": "/genreUpdate",
+            "title": "Genre Update",
+            "description": "Data to update an existing genre.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Name of the genre",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Short description of the genre",
+                    "type": "string"
+                },
+                "imageURL": {
+                    "description": "URL for genre image",
+                    "type": "uri"
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}

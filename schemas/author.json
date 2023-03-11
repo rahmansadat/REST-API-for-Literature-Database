@@ -1,0 +1,49 @@
+{
+    "schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "author": {
+            "id": "/author",
+            "title": "Author",
+            "description": "Data to create a new author",
+            "type": "object",
+            "properties": {
+                "fullName": {
+                    "description": "First and last name of the author",
+                    "type": "text"
+                },
+                "about": {
+                    "description": "Short introduction to the author and their works.",
+                    "type": "string"
+                },
+                "imageURL": {
+                    "description": "URL for author's photo",
+                    "type": "string"
+                }
+            },
+            "required": ["fullName"],
+            "additionalProperties": false
+        },
+        
+        "authorUpdate": {
+            "id": "/author",
+            "title": "Author",
+            "description": "Data to create a new author",
+            "type": "object",
+            "properties": {
+                "fullName": {
+                    "description": "First and last name of the author",
+                    "type": "text"
+                },
+                "about": {
+                    "description": "Short introduction to the author and their works.",
+                    "type": "string"
+                },
+                "imageURL": {
+                    "description": "URL for author's photo",
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}

@@ -2,13 +2,14 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const model = require('../models/genres');
 const auth = require('../controllers/auth');
+const {validateGenre, validateGenreUpdate} = require('../controllers/validation');
 
 const router = Router({prefix: '/api/v1/genres'});
 
 router.get('/', getAll);
-router.post('/', auth, bodyParser(), createGenre);
+router.post('/', auth, bodyParser(), validateGenre, createGenre);
 router.get('/:id([0-9]{1,})', getById);
-router.put('/:id([0-9]{1,})', auth, bodyParser(), updateGenre);
+router.put('/:id([0-9]{1,})', auth, bodyParser(), validateGenreUpdate, updateGenre);
 router.del('/:id([0-9]{1,})', auth, deleteGenre);
 
 async function getAll(ctx) {

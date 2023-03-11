@@ -1,0 +1,65 @@
+{
+    "schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "review": {
+            "id": "/review",
+            "title": "Review",
+            "description": "Data to create a new review",
+            "type": "object",
+            "properties": {
+                "rating": {
+                    "description": "Rating out of 10",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10
+                },
+                "allText": {
+                    "description": "Full body of review",
+                    "type": "string"
+                },
+                "userID": {
+                    "description": "ID of the user who wrote this review",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "bookID": {
+                    "description": "ID of the book the review is about",
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "required": ["rating", "allText", "userID", "bookID"],
+            "additionalProperties": false
+        },
+        
+        "reviewUpdate": {
+            "id": "/reviewUpdate",
+            "title": "Review Update",
+            "description": "Data to update an existing review",
+            "type": "object",
+            "properties": {
+                "rating": {
+                    "description": "Rating out of 10",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10
+                },
+                "allText": {
+                    "description": "Full body of review",
+                    "type": "string"
+                },
+                "userID": {
+                    "description": "ID of the user who wrote this review",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "bookID": {
+                    "description": "ID of the book the review is about",
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "additionalProperties": false
+        }
+    }
+}

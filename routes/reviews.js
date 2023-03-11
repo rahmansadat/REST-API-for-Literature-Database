@@ -2,13 +2,14 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 const model = require('../models/reviews');
 const auth = require('../controllers/auth');
+const {validateReview, validateReviewUpdate} = require('../controllers/validation');
 
 const router = Router({prefix: '/api/v1/reviews'});
 
 router.get('/', getAll);
-router.post('/', auth, bodyParser(), createReview);
+router.post('/', auth, bodyParser(), validateReview, createReview);
 router.get('/:id([0-9]{1,})', getById);
-router.put('/:id([0-9]{1,})', auth, bodyParser(), updateReview);
+router.put('/:id([0-9]{1,})', auth, bodyParser(), validateReviewUpdate, updateReview);
 router.del('/:id([0-9]{1,})', auth, deleteReview);
 
 async function getAll(ctx) {
