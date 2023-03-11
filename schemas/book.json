@@ -21,7 +21,8 @@
         },
         "imageURL": {
           "description": "URL for book cover",
-          "type": "uri"
+          "type": "string",
+          "format": "uri"
         },
         "authorID": {
           "description": "ID of the book's author",
@@ -58,7 +59,8 @@
         },
         "imageURL": {
           "description": "URL for book cover",
-          "type": "uri"
+          "type": "string",
+          "format": "uri"
         },
         "authorID": {
           "description": "ID of the book's author",

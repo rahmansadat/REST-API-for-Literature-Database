@@ -17,7 +17,8 @@
                 },
                 "imageURL": {
                     "description": "URL for author's photo",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uri"
                 }
             },
             "required": ["fullName"],
@@ -40,7 +41,8 @@
                 },
                 "imageURL": {
                     "description": "URL for author's photo",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uri"
                 }
             },
             "additionalProperties": false

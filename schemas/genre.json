@@ -17,7 +17,8 @@
                 },
                 "imageURL": {
                     "description": "URL for genre image",
-                    "type": "uri"
+                    "type": "string",
+                    "format": "uri"
                 }
             },
             "required": ["name"],
@@ -40,7 +41,8 @@
                 },
                 "imageURL": {
                     "description": "URL for genre image",
-                    "type": "uri"
+                    "type": "string",
+                    "format": "uri"
                 }
             },
             "additionalProperties": false
