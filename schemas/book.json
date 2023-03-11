@@ -1,0 +1,77 @@
+{
+  "schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "book": {
+      "id": "/book",
+      "title": "Book",
+      "description": "Data to create a new book",
+      "type": "object",
+      "properties": {
+        "title": {
+          "description": "Title of the book",
+          "type": "string"
+        },
+        "summary": {
+          "description": "Short summary of the book",
+          "type": "string"
+        },
+        "isbn": {
+          "description": "ISBN code of the book",
+          "type": "string"
+        },
+        "imageURL": {
+          "description": "URL for book cover",
+          "type": "uri"
+        },
+        "authorID": {
+          "description": "ID of the book's author",
+          "type": "integer",
+          "minimum": 0
+        },
+        "genreID": {
+          "description": "ID of the genre the book belongs to",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["title", "authorID"],
+      "additionalProperties": false
+    }, 
+
+    "bookUpdate": {
+      "id": "/bookUpdate",
+      "title": "Book Update",
+      "description": "Data to update an existing book.",
+      "type": "object",
+      "properties": {
+        "title": {
+          "description": "Title of the book",
+          "type": "string"
+        },
+        "summary": {
+          "description": "Short summary of the book",
+          "type": "string"
+        },
+        "isbn": {
+          "description": "ISBN code of the book",
+          "type": "string"
+        },
+        "imageURL": {
+          "description": "URL for book cover",
+          "type": "uri"
+        },
+        "authorID": {
+          "description": "ID of the book's author",
+          "type": "integer",
+          "minimum": 0
+        },
+        "genreID": {
+          "description": "ID of the genre the book belongs to",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
