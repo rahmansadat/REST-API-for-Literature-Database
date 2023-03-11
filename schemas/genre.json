@@ -46,6 +46,57 @@
                 }
             },
             "additionalProperties": false
+        }, 
+
+        "genreCreated": {
+            "id": "/genreCreated",
+            "title": "Genre Created",
+            "description": "Confirmation of a successful genre creation",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the created genre",
+                    "type": "integer"
+                },
+                "created": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
+        }, 
+
+        "genreUpdated": {
+            "id": "/genreUpdated",
+            "title": "Genre Updated",
+            "description": "Confirmation of a successful genre update",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the updated genre",
+                    "type": "integer"
+                },
+                "updated": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
+        }, 
+
+        "genreDeleted": {
+            "id": "/genreDeleted",
+            "title": "Genre Deleted",
+            "description": "Confirmation of a successful genre deletion",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the deleted genre",
+                    "type": "integer"
+                },
+                "deleted": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
         }
     }
 }
