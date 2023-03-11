@@ -84,6 +84,57 @@
                 }
             },
             "additionalProperties": false
+        },
+
+        "userCreated": {
+            "id": "/userCreated",
+            "title": "User Created",
+            "description": "Confirmation of a successful user creation",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the created user",
+                    "type": "integer"
+                },
+                "created": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
+        }, 
+
+        "userUpdated": {
+            "id": "/userUpdated",
+            "title": "User Updated",
+            "description": "Confirmation of a successful user update",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the updated user",
+                    "type": "integer"
+                },
+                "updated": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
+        }, 
+
+        "userDeleted": {
+            "id": "/userDeleted",
+            "title": "User Deleted",
+            "description": "Confirmation of a successful user deletion",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the deleted user",
+                    "type": "integer"
+                },
+                "deleted": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
         }
     }
 }

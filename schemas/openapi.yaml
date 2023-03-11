@@ -56,6 +56,10 @@ paths:
       responses:
         '201':
           description: User created.
+          content:
+            application/json:
+              schema:
+                $ref: ./user.json#/definitions/userCreated
         '400':
           description: User creation failed because of unknown issue.
   /users/{id}:
@@ -93,6 +97,10 @@ paths:
       responses:
         '200':
           description: User updated.
+          content:
+            application/json:
+              schema:
+                $ref: ./user.json#/definitions/userCreated
         '404':
           description: User not found.
         '401':
@@ -108,6 +116,10 @@ paths:
       responses:
         '200':
           description: User deleted.
+          content:
+            application/json:
+              schema:
+                $ref: ./user.json#/definitions/userDeleted
         '404':
           description: User not found.
         '401':
