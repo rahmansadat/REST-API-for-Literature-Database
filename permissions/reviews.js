@@ -16,8 +16,6 @@ ac.grant('admin').execute('delete').on('review');
 exports.create = (requester, data) =>
 ac.can(requester.role).context({requester:requester.ID, owner:data.userID}).execute('create').sync().on('reviews');
 
-// maybe it's not gonna be requester.ID and data.ID, maybe data.userID ??
-
 exports.update = (requester, data) =>
 ac.can(requester.role).context({requester:requester.ID, owner:data.userID}).execute('update').sync().on('review');
 
