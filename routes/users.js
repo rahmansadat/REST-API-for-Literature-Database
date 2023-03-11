@@ -3,6 +3,7 @@ const bodyParser = require('koa-bodyparser');
 const model = require('../models/users');
 const auth = require('../controllers/auth');
 const {validateUser, validateUserUpdate} = require('../controllers/validation');
+const can = require('../permissions/users');
 
 const router = Router({prefix: '/api/v1/users'});
 
@@ -16,12 +17,17 @@ async function getAll(ctx) {
     let limit = 10; // number of records to return
     let order = 'username'; // order based on specified column
 
-    let users = await model.getAll(limit, order);
-    if (users.length) {
-        ctx.body = users;
-        ctx.status = 200;
+    let permission = can.readAll(ctx.state.user);
+    if (!permission.granted) {
+        ctx.status = 403;
     } else {
-        ctx.status = 404;
+        let result = await model.getAll(limit, order);
+        if (result.length) {
+            ctx.body = result;
+            ctx.status = 200;
+        } else {
+            ctx.status = 404;
+        }
     }
 }
 
