@@ -20,7 +20,7 @@ async function getAll(ctx) {
     let result = await model.getAll(limit, order);
     if (result.length) {
         let data = result;
-        let permission = can.update(ctx.state.user, data);
+        let permission = can.readAll(ctx.state.user, data);
         if (!permission.granted) {
             ctx.status = 403;
         } else {
