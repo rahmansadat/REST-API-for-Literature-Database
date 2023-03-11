@@ -24,7 +24,7 @@ async function getAll(ctx) {
         if (!permission.granted) {
             ctx.status = 403;
         } else {
-            ctx.body = result;
+            ctx.body = data;
             ctx.status = 200;
         }
     } else {
