@@ -49,6 +49,10 @@ paths:
       requestBody:
         description: New user data.
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./user.json#/definitions/user
       responses:
         '201':
           description: User created.
@@ -82,6 +86,10 @@ paths:
       requestBody:
         description: Updated user data.
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./user.json#/definitions/userUpdate
       responses:
         '200':
           description: User updated.
@@ -125,6 +133,10 @@ paths:
       requestBody:
         description: New book data.
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./book.json#/definitions/book
       responses:
         '201':
           description: Book created.
@@ -158,6 +170,10 @@ paths:
       requestBody:
         description: Updated book data.
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./book.json#/definitions/bookUpdate
       responses:
         '200':
           description: Book updated.
@@ -201,6 +217,10 @@ paths:
       requestBody:
         description: New genre data.
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./genre.json#/definitions/genre
       responses:
         '201':
           description: Genre created.
@@ -234,6 +254,10 @@ paths:
       requestBody:
         description: Updated genre data.
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./genre.json#/definitions/genreUpdate
       responses:
         '200':
           description: Genre updated.
@@ -277,6 +301,10 @@ paths:
       requestBody:
         description: New author data.
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./author.json#/definitions/author
       responses:
         '201':
           description: Author created.
@@ -310,6 +338,10 @@ paths:
       requestBody:
         description: Updated author data.
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./author.json#/definitions/authorUpdate
       responses:
         '200':
           description: Author updated.
@@ -353,6 +385,10 @@ paths:
       requestBody:
         description: New review data.
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./review.json#/definitions/review
       responses:
         '201':
           description: Review created.
@@ -386,6 +422,10 @@ paths:
       requestBody:
         description: Updated review data.
         required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./review.json#/definitions/reviewUpdate
       responses:
         '200':
           description: Review updated.
