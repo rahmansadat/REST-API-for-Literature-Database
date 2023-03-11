@@ -59,7 +59,7 @@ async function createUser(ctx) {
         ctx.body = {ID: result.insertId, created: true}
         ctx.status = 201;
     } else {
-        ctx.status = 404;
+        ctx.status = 400;
     }
 }
 
@@ -80,7 +80,7 @@ async function updateUser(ctx) {
                 ctx.body = {ID: id, updated: true};
                 ctx.status = 200;
             } else {
-                ctx.status = 404;
+                ctx.status = 400;
             }
         }
     } else {
@@ -104,7 +104,7 @@ async function deleteUser(ctx){
                 ctx.body = {ID: id, deleted: true};
                 ctx.status = 200;
             } else {
-                ctx.status = 404;
+                ctx.status = 400;
             }
         }    
     } else {

@@ -49,11 +49,11 @@ async function createAuthor(ctx) {
             ctx.body = {ID: result.insertId, created: true}
             ctx.status = 201;
         } else {
-            ctx.status = 404;
+            ctx.status = 400;
         }
     }
 }
-  
+
 async function updateAuthor(ctx){
     let id = ctx.params.id;
     let result = await model.getById(id);
@@ -70,7 +70,7 @@ async function updateAuthor(ctx){
                 ctx.body = {ID: id, updated: true};
                 ctx.status = 200;
             } else {
-                ctx.status = 404;
+                ctx.status = 400;
             }
         }
     } else {
@@ -94,7 +94,7 @@ async function deleteAuthor(ctx){
                 ctx.body = {ID: id, deleted: true};
                 ctx.status = 200;
             } else {
-                ctx.status = 404;
+                ctx.status = 400;
             }
         }       
     } else {

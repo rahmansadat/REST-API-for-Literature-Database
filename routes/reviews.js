@@ -49,7 +49,7 @@ async function createReview(ctx) {
             ctx.body = {ID: result.insertId, created: true}
             ctx.status = 201;
         } else {
-            ctx.status = 404;
+            ctx.status = 400;
         }
     }
 }
@@ -71,7 +71,7 @@ async function updateReview(ctx){
                 ctx.body = {ID: id, updated: true};
                 ctx.status = 200;
             } else {
-                ctx.status = 404;
+                ctx.status = 400;
             }
         }
     } else {
@@ -96,7 +96,7 @@ async function deleteReview(ctx){
                 ctx.body = {ID: id, deleted: true};
                 ctx.status = 200;
             } else {
-                ctx.status = 404;
+                ctx.status = 400;
             }
         }       
     } else {
