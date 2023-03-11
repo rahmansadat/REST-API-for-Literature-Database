@@ -152,6 +152,10 @@ paths:
       responses:
         '201':
           description: Book created.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookCreated
         '401':
           description: Authentication is required to create a book.
         '403':
@@ -189,6 +193,10 @@ paths:
       responses:
         '200':
           description: Book updated.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookUpdated
         '404':
           description: Book not found.
         '401':
@@ -204,6 +212,10 @@ paths:
       responses:
         '200':
           description: Book deleted.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookDeleted
         '404':
           description: Book not found.
         '401':

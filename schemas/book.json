@@ -74,6 +74,57 @@
         }
       },
       "additionalProperties": false
+    }, 
+
+    "bookCreated": {
+      "id": "/bookCreated",
+      "title": "Book Created",
+      "description": "Confirmation of a successful book creation",
+      "type": "object",
+      "properties": {
+        "ID": {
+          "description": "ID of the created book",
+          "type": "integer"
+        },
+        "created": {
+          "description": "Boolean value indicating success",
+          "type": "boolean"
+        }
+      }
+    }, 
+
+    "bookUpdated": {
+      "id": "/bookUpdated",
+      "title": "Book Updated",
+      "description": "Confirmation of a successful book update",
+      "type": "object",
+      "properties": {
+        "ID": {
+          "description": "ID of the updated book",
+          "type": "integer"
+        },
+        "updated": {
+          "description": "Boolean value indicating success",
+          "type": "boolean"
+        }
+      }
+    }, 
+
+    "bookDeleted": {
+      "id": "/bookDeleted",
+      "title": "Book Deleted",
+      "description": "Confirmation of a successful book deletion",
+      "type": "object",
+      "properties": {
+        "ID": {
+          "description": "ID of the deleted book",
+          "type": "integer"
+        },
+        "deleted": {
+          "description": "Boolean value indicating success",
+          "type": "boolean"
+        }
+      }
     }
   }
 }
