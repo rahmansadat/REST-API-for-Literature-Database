@@ -32,6 +32,15 @@ exports.add = async function add (user) {
 
 // Update a user by their id
 exports.updateById = async function updateById (user, id) {
+
+    // If request was made to update password, the new password gets hashed.
+    if (user.hasOwnProperty("password")) {
+        const password = user.password
+        const salt = bcrypt.genSaltSync();
+        const hash = bcrypt.hashSync(password, salt);
+        user.password = hash
+    }
+
     let query = "UPDATE users SET ? WHERE ID = ?";
     values = [user, id]
     let data = await db.run_query(query, values);
