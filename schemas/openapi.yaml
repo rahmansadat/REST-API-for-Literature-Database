@@ -344,6 +344,10 @@ paths:
       responses:
         '201':
           description: Author created.
+          content:
+            application/json:
+              schema:
+                $ref: ./author.json#/definitions/authorCreated
         '401':
           description: Authentication is required to create an author.
         '403':
@@ -381,6 +385,10 @@ paths:
       responses:
         '200':
           description: Author updated.
+          content:
+            application/json:
+              schema:
+                $ref: ./author.json#/definitions/authorUpdated
         '404':
           description: Author not found.
         '401':
@@ -396,6 +404,10 @@ paths:
       responses:
         '200':
           description: Author deleted.
+          content:
+            application/json:
+              schema:
+                $ref: ./author.json#/definitions/authorDeleted
         '404':
           description: Author not found.
         '401':

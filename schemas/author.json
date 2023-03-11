@@ -46,6 +46,57 @@
                 }
             },
             "additionalProperties": false
+        }, 
+
+        "authorCreated": {
+            "id": "/authorCreated",
+            "title": "Author Created",
+            "description": "Confirmation of a successful author creation",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the created author",
+                    "type": "integer"
+                },
+                "created": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
+        }, 
+
+        "authorUpdated": {
+            "id": "/authorUpdated",
+            "title": "Author Updated",
+            "description": "Confirmation of a successful author update",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the updated author",
+                    "type": "integer"
+                },
+                "updated": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
+        }, 
+
+        "authorDeleted": {
+            "id": "/authorDeleted",
+            "title": "Author Deleted",
+            "description": "Confirmation of a successful author deletion",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the deleted author",
+                    "type": "integer"
+                },
+                "deleted": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
         }
     }
 }
