@@ -3,6 +3,7 @@ const bodyParser = require('koa-bodyparser');
 const model = require('../models/authors');
 const auth = require('../controllers/auth');
 const {validateAuthor, validateAuthorUpdate} = require('../controllers/validation');
+const can = require('../permissions/authors');
 
 const router = Router({prefix: '/api/v1/authors'});
 
@@ -25,7 +26,7 @@ async function getAll(ctx) {
     }
 }
 
-  async function getById(ctx) {
+async function getById(ctx) {
     let id = ctx.params.id;
     let author = await model.getById(id);
     if (author.length) {
@@ -36,35 +37,68 @@ async function getAll(ctx) {
     }
 }
   
-  async function createAuthor(ctx) {
+async function createAuthor(ctx) {
     let body = ctx.request.body;
-    let result = await model.add(body);
-    if (result.affectedRows) {
-        ctx.body = {ID: result.insertId, created: true}
-        ctx.status = 201;
+    let permission = can.create(ctx.state.user);
+
+    if (!permission.granted) {
+        ctx.status = 403;
+    } else {
+        let result = await model.add(body);
+        if (result.affectedRows) {
+            ctx.body = {ID: result.insertId, created: true}
+            ctx.status = 201;
+        } else {
+            ctx.status = 404;
+        }
+    }
+}
+  
+async function updateAuthor(ctx){
+    let id = ctx.params.id;
+    let result = await model.getById(id);
+
+    if (result.length) {
+        let data = result[0];
+        let permission = can.update(ctx.state.user);
+
+        if (!permission.granted) {
+            ctx.status = 403;
+        } else {
+            let data = ctx.request.body;
+            let result = await model.updateById(data, id);
+            if (result.affectedRows) {
+                ctx.body = {ID: id, updated: true};
+                ctx.status = 200;
+            } else {
+                ctx.status = 404;
+            }
+        }
     } else {
         ctx.status = 404;
     }
 }
-  
-  async function updateAuthor(ctx){
+
+async function deleteAuthor(ctx){
     let id = ctx.params.id;
-    let body = ctx.request.body;
-    let result = await model.updateById(body, id);
-    if (result.affectedRows) {
-        ctx.body = {ID: id, updated: true};
-        ctx.status = 200;
-    } else {
-        ctx.status = 404;
-    }
-}
-  
-  async function deleteAuthor(ctx){
-    let id = ctx.params.id;
-    let result = await model.deleteById(id);
-    if (result.affectedRows) {
-        ctx.body = {ID: id, deleted: true};
-        ctx.status = 200;
+    let result = await model.getById(id);
+
+    if (result.length) {
+        let data = result[0];
+        let permission = can.delete(ctx.state.user);
+
+        if (!permission.granted) {
+            ctx.status = 403;
+        } else {
+
+            let result = await model.deleteById(id);
+            if (result.affectedRows) {
+                ctx.body = {ID: id, deleted: true};
+                ctx.status = 200;
+            } else {
+                ctx.status = 404;
+            }
+        }       
     } else {
         ctx.status = 404;
     }
