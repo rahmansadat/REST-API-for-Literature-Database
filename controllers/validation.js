@@ -19,7 +19,7 @@ const validatorFactory = (schema) => {
             await next();
         } catch (error) {
             if (error instanceof ValidationError) {
-                ctx.body = error;
+                ctx.body = {error: "ValidationError", "errorDetails": error.stack};
                 ctx.status = 400;
             } else {
                 throw error;
