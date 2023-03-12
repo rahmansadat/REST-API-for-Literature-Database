@@ -145,7 +145,8 @@
             "properties": {
                 "ID": {
                     "description": "ID of the user",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "role": {
                     "description": "Role of the user",
@@ -189,7 +190,7 @@
         "userGetAll": {
             "id": "/userGetAll",
             "title": "User Get All",
-            "description": "All user data in the response body (visible by admin only)",
+            "description": "All users data in the response body (visible by admin only)",
             "type": "array",
             "items": {"$ref": "#/definitions/userGet"}
         }
