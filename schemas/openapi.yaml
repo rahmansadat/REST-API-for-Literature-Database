@@ -440,6 +440,10 @@ paths:
       responses:
         '201':
           description: Review created.
+          content:
+            application/json:
+              schema:
+                $ref: ./review.json#/definitions/reviewCreated
         '401':
           description: Authentication is required to create a review.
         '403':
@@ -477,6 +481,10 @@ paths:
       responses:
         '200':
           description: Review updated.
+          content:
+            application/json:
+              schema:
+                $ref: ./review.json#/definitions/reviewUpdated
         '404':
           description: Review not found.
         '401':
@@ -492,6 +500,10 @@ paths:
       responses:
         '200':
           description: Review deleted.
+          content:
+            application/json:
+              schema:
+                $ref: ./review.json#/definitions/reviewDeleted
         '404':
           description: Review not found.
         '401':

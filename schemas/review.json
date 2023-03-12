@@ -60,6 +60,57 @@
                 }
             },
             "additionalProperties": false
+        }, 
+
+        "reviewCreated": {
+            "id": "/reviewCreated",
+            "title": "Review Created",
+            "description": "Confirmation of a successful review creation",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the created review",
+                    "type": "integer"
+                },
+                "created": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
+        }, 
+
+        "reviewUpdated": {
+            "id": "/reviewUpdated",
+            "title": "Review Updated",
+            "description": "Confirmation of a successful review update",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the updated review",
+                    "type": "integer"
+                },
+                "updated": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
+        }, 
+
+        "reviewDeleted": {
+            "id": "/reviewDeleted",
+            "title": "Review Deleted",
+            "description": "Confirmation of a successful review deletion",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the deleted review",
+                    "type": "integer"
+                },
+                "deleted": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
         }
     }
 }
