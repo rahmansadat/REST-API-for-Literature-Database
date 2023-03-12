@@ -47,10 +47,15 @@ CREATE TABLE books (
     isbn TEXT,
     imageURL VARCHAR(2048),
     authorID INT NOT NULL,
-    genreID INT,
     PRIMARY KEY (ID),
-    FOREIGN KEY (authorID) REFERENCES users (ID) ON DELETE CASCADE,
-    FOREIGN KEY (genreiD) REFERENCES genres (ID) ON DELETE CASCADE);
+    FOREIGN KEY (authorID) REFERENCES users (ID) ON DELETE CASCADE);
+
+CREATE TABLE bookGenres (
+    genreID INT NOT NULL,
+    bookID INT NOT NULL,
+    PRIMARY KEY (genreID, bookID),
+    FOREIGN KEY (genreID) REFERENCES genres (ID) ON DELETE CASCADE,
+    FOREIGN KEY (bookID) REFERENCES books (ID) ON DELETE CASCADE);
 
 CREATE TABLE reviews (
     ID INT NOT NULL AUTO_INCREMENT,
@@ -88,11 +93,19 @@ INSERT INTO authors (fullName, about) VALUES
     ("Stephen King", "Stephen King is a prolific and highly influential American author known for his horror, suspense, and supernatural fiction, with works ranging from classics such as Carrie, The Shining, and It to more recent novels like The Outsider and The Institute."),
     ("John Green", "John Green is an American author known for his young adult novels that often explore themes of love, loss, and mental health, with his most famous works including The Fault in Our Stars, Looking for Alaska, and Paper Towns.");
 
-INSERT INTO books (title, summary, datePublished, isbn, authorID, genreID) VALUES
-    ("The Hobbit", "The Hobbit is a classic high-fantasy novel that tells the story of the hobbit Bilbo Baggins, who embarks on an adventure with a group of dwarves to reclaim their treasure from the dragon Smaug.", '2002-08-15', NULL, 1, 1),
-    ("Doctor Sleep", "Doctor Sleep is a horror novel by Stephen King and a sequel to his earlier novel The Shining, following the adult life of Dan Torrance as he faces his past and battles a group of quasi-immortal beings who feed on children with psychic abilities.", '2013-09-24', "9781476727653", 2, 5),
-    ("Looking for Alaska", "Looking for Alaska is a young adult novel that follows the story of Miles Halter as he navigates his first year at a boarding school and his relationships with his new friends, including the enigmatic and troubled Alaska Young.", '2006-12-28', "9781435249158", 3, 7),
-    ("The Silmarillion", "The Silmarillion is a posthumously published collection of J.R.R. Tolkien's works detailing the mythology and history of Middle-earth, from the creation of the universe to the end of the Third Age.", '2004-11-15', "9780618391110", 1, 1);
+INSERT INTO books (title, summary, datePublished, isbn, authorID) VALUES
+    ("The Hobbit", "The Hobbit is a classic high-fantasy novel that tells the story of the hobbit Bilbo Baggins, who embarks on an adventure with a group of dwarves to reclaim their treasure from the dragon Smaug.", '2002-08-15', NULL, 1),
+    ("Doctor Sleep", "Doctor Sleep is a horror novel by Stephen King and a sequel to his earlier novel The Shining, following the adult life of Dan Torrance as he faces his past and battles a group of quasi-immortal beings who feed on children with psychic abilities.", '2013-09-24', "9781476727653", 2),
+    ("Looking for Alaska", "Looking for Alaska is a young adult novel that follows the story of Miles Halter as he navigates his first year at a boarding school and his relationships with his new friends, including the enigmatic and troubled Alaska Young.", '2006-12-28', "9781435249158", 3),
+    ("The Silmarillion", "The Silmarillion is a posthumously published collection of J.R.R. Tolkien's works detailing the mythology and history of Middle-earth, from the creation of the universe to the end of the Third Age.", '2004-11-15', "9780618391110", 1);
+
+INSERT INTO bookGenres (bookID, genreID) VALUES
+    (1, 1),
+    (2, 5),
+    (2, 6),
+    (3, 3),
+    (3, 7),
+    (4, 1);
 
 INSERT INTO reviews (rating, allText, userID, bookID) VALUES
     (8, "Such a cute book with lovable characters! Alaska is literally me!", 2, 3),
