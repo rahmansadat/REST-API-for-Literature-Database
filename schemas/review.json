@@ -111,6 +111,58 @@
                     "type": "boolean"
                 }
             }
+        }, 
+
+        "reviewGet": {
+            "id": "/reviewGet",
+            "title": "Review Get",
+            "description": "Review data in the response body",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the review",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "rating": {
+                    "description": "Rating out of 10",
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10
+                },
+                "allText": {
+                    "description": "Full body of review",
+                    "type": "string"
+                },
+                "dateCreated": {
+                    "description": "Date and time when the review was created",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "dateModified": {
+                    "description": "Date and time when the review was last modified",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "userID": {
+                    "description": "ID of the user who wrote this review",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "bookID": {
+                    "description": "ID of the book the review is about",
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        }, 
+
+        "reviewGetAll": {
+            "id": "/reviewGetAll",
+            "title": "Review Get All",
+            "description": "All reviews data in the response body",
+            "type": "array",
+            "items": {"$ref": "#/definitions/reviewGet"}
         }
     }
 }

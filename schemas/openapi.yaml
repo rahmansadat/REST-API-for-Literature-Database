@@ -456,6 +456,10 @@ paths:
       responses:
         '200':
           description: View of all reviews.
+          content:
+            application/json:
+              schema:
+                $ref: ./review.json#/definitions/reviewGetAll
         '404':
           description: No reviews found.
     post:
@@ -497,6 +501,10 @@ paths:
       responses:
         '200':
           description: View of a review.
+          content:
+            application/json:
+              schema:
+                $ref: ./review.json#/definitions/reviewGet
         '404':
           description: Review not found.
     put:
