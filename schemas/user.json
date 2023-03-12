@@ -135,6 +135,63 @@
                     "type": "boolean"
                 }
             }
+        }, 
+
+        "userGet": {
+            "id": "/userGet",
+            "title": "User Get",
+            "description": "User data in the response body",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the user",
+                    "type": "integer"
+                },
+                "role": {
+                    "description": "Role of the user",
+                    "type": "string"
+                },
+                "firstName": {
+                    "description": "First name of the user",
+                    "type": "string"
+                },
+                "lastName": {
+                    "description": "Last name of the user",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "Unique username for the user",
+                    "type": "string",
+                    "minLength": 5
+                },
+                "about": {
+                    "description": "Short description of the user",
+                    "type": "string"
+                },
+                "dateRegistered": {
+                    "description": "Date and time when the user was registered",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "email": {
+                    "description": "Unique email address of the user",
+                    "type": "string",
+                    "format": "email"
+                },
+                "avatarURL": {
+                    "description": "URL for user's profile image",
+                    "type": "string",
+                    "format": "uri"
+                }
+            }
+        }, 
+
+        "userGetAll": {
+            "id": "/userGetAll",
+            "title": "User Get All",
+            "description": "All user data in the response body (visible by admin only)",
+            "type": "array",
+            "items": {"$ref": "#/definitions/userGet"}
         }
     }
 }

@@ -36,6 +36,10 @@ paths:
       responses:
         '200':
           description: View of all users.
+          content:
+            application/json:
+              schema:
+                $ref: ./user.json#/definitions/userGetAll
         '404':
           description: No users found.
         '401':
@@ -77,6 +81,10 @@ paths:
       responses:
         '200':
           description: View of a user.
+          content:
+            application/json:
+              schema:
+                $ref: ./user.json#/definitions/userGet
         '404':
           description: User not found.
         '401':
