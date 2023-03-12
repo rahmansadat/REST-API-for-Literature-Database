@@ -97,6 +97,41 @@
                     "type": "boolean"
                 }
             }
+        }, 
+
+        "genreGet": {
+            "id": "/genreGet",
+            "title": "Genre Get",
+            "description": "Genre data in the response body",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the genre",
+                    "type": "number",
+                    "minimum": 0
+                },
+                "name": {
+                    "description": "Name of the genre",
+                    "type": "string"
+                },
+                "description": {
+                    "description": "Short description of the genre",
+                    "type": "string"
+                },
+                "imageURL": {
+                    "description": "URL for genre image",
+                    "type": "string",
+                    "format": "uri"
+                }
+            }
+        }, 
+
+        "genreGetAll": {
+            "id": "/genreGetAll",
+            "title": "Genre Get All",
+            "description": "All genres data in the response body",
+            "type": "array",
+            "items": {"$ref": "#/definitions/genreGet"}
         }
     }
 }

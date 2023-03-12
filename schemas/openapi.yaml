@@ -248,6 +248,10 @@ paths:
       responses:
         '200':
           description: View of all genres.
+          content:
+            application/json:
+              schema:
+                $ref: ./genre.json#/definitions/genreGetAll
         '404':
           description: No genres found.
     post:
@@ -289,6 +293,10 @@ paths:
       responses:
         '200':
           description: View of a genre.
+          content:
+            application/json:
+              schema:
+                $ref: ./genre.json#/definitions/genreGet
         '404':
           description: Genre not found.
     put:
