@@ -144,6 +144,10 @@ paths:
       responses:
         '200':
           description: View of all books.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookGetAll
         '404':
           description: No books found.
     post:
@@ -185,6 +189,10 @@ paths:
       responses:
         '200':
           description: View of a book.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookGet
         '404':
           description: Book not found.
     put:
