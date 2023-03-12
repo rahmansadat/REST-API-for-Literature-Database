@@ -39,11 +39,13 @@ async function getById(ctx) {
 
 async function createReview(ctx) {
     let body = ctx.request.body;
-    let permission = can.create(ctx.state.user, body);
+    let userID = ctx.state.user.ID;
 
+    let permission = can.create(ctx.state.user);
     if (!permission.granted) {
         ctx.status = 403;
     } else {
+        body.userID = userID;
         let result = await model.add(body);
         if (result.affectedRows) {
             ctx.body = {ID: result.insertId, created: true}
@@ -53,7 +55,7 @@ async function createReview(ctx) {
         }
     }
 }
- 
+
 async function updateReview(ctx){
     let id = ctx.params.id;
     let result = await model.getById(id);

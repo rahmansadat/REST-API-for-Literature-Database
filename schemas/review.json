@@ -17,18 +17,13 @@
                     "description": "Full body of review",
                     "type": "string"
                 },
-                "userID": {
-                    "description": "ID of the user who wrote this review",
-                    "type": "integer",
-                    "minimum": 0
-                },
                 "bookID": {
                     "description": "ID of the book the review is about",
                     "type": "integer",
                     "minimum": 0
                 }
             },
-            "required": ["rating", "allText", "userID", "bookID"],
+            "required": ["rating", "allText", "bookID"],
             "additionalProperties": false
         },
         
