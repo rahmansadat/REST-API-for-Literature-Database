@@ -9,7 +9,7 @@
             "properties": {
                 "fullName": {
                     "description": "First and last name of the author",
-                    "type": "text"
+                    "type": "string"
                 },
                 "about": {
                     "description": "Short introduction to the author and their works.",
@@ -33,7 +33,7 @@
             "properties": {
                 "fullName": {
                     "description": "First and last name of the author",
-                    "type": "text"
+                    "type": "string"
                 },
                 "about": {
                     "description": "Short introduction to the author and their works.",
@@ -97,6 +97,41 @@
                     "type": "boolean"
                 }
             }
+        }, 
+
+        "authorGet": {
+            "id": "/authorGet",
+            "title": "Author Get",
+            "description": "Author data in the response body",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the author",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "fullName": {
+                    "description": "First and last name of the author",
+                    "type": "string"
+                },
+                "about": {
+                    "description": "Short introduction to the author and their works.",
+                    "type": "string"
+                },
+                "imageURL": {
+                    "description": "URL for author's photo",
+                    "type": "string",
+                    "format": "uri"
+                }
+            }
+        }, 
+
+        "authorGetAll": {
+            "id": "/authorGetAll",
+            "title": "Author Get All",
+            "description": "All authors data in the response body",
+            "type": "array",
+            "items": {"$ref": "#/definitions/authorGet"}
         }
     }
 }

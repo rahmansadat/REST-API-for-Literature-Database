@@ -344,6 +344,10 @@ paths:
       responses:
         '200':
           description: View of all authors.
+          content:
+            application/json:
+              schema:
+                $ref: ./author.json#/definitions/authorGetAll
         '404':
           description: No authors found.
     post:
@@ -385,6 +389,10 @@ paths:
       responses:
         '200':
           description: View of an author.
+          content:
+            application/json:
+              schema:
+                $ref: ./author.json#/definitions/authorGet
         '404':
           description: Author not found.
     put:
