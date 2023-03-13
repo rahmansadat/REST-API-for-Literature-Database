@@ -109,6 +109,5 @@ INSERT INTO bookGenres (bookID, genreID) VALUES
 
 INSERT INTO reviews (rating, allText, userID, bookID) VALUES
     (8, "Such a cute book with lovable characters! Alaska is literally me!", 2, 3),
-    (7, "My friend Ema recommended it to me. Enjoyed it.", 1, 3),
     (4, "Too scary for me.", 2, 2),
     (10, "An absolute masterpiece. Highly recommend.", 3, 1);
