@@ -8,8 +8,8 @@ exports.getById = async function getById (id) {
     return data;
 }
 
-// Get all reviews
-exports.getAll = async function getAll (bookID, order, limit) {
+// Get all reviews by book
+exports.getAllByBook = async function getAllByBook (bookID, order, limit) {
     let query = "SELECT * FROM reviews WHERE bookID = ? ORDER BY ?? LIMIT ?";
     let values = [bookID, order, limit];
     let data = await db.run_query(query, values);
@@ -36,6 +36,14 @@ exports.updateById = async function updateById (review, id) {
 exports.deleteById = async function deleteById (id) {
     let query = "DELETE FROM reviews WHERE ID = ?";
     let values = [id]
+    let data = await db.run_query(query, values);
+    return data;
+}
+
+// Get all reviews by user
+exports.getAllByUser = async function getAllByUser (bookID, order, limit) {
+    let query = "SELECT * FROM reviews WHERE userID = ? ORDER BY ?? LIMIT ?";
+    let values = [bookID, order, limit];
     let data = await db.run_query(query, values);
     return data;
 }
