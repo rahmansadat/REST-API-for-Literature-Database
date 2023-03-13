@@ -469,6 +469,27 @@ paths:
           description: Non-admin users cannot delete authors.
         '400':
           description: Author deletion failed because of unknown issue.
+  /authors{id}/books:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: ID number of author
+    get:
+      tags:
+        - Authors
+      description: Get all books written by an author.
+      responses:
+        '200':
+          description: View of all books.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookGetAll
+        '404':
+          description: Author or books not found.
   /reviews:
     get:
       tags:
