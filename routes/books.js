@@ -1,10 +1,14 @@
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
+
 const model = require('../models/books');
+const authorModel = require('../models/authors');
+
 const auth = require('../controllers/auth');
 const {validateBook, validateBookUpdate} = require('../controllers/validation');
 const can = require('../permissions/books');
 
+const authorPrefix = '/api/v1/authors';
 const prefix = '/api/v1/books';
 const router = Router({prefix: prefix});
 
@@ -14,7 +18,7 @@ router.get('/:id([0-9]{1,})', getById);
 router.put('/:id([0-9]{1,})', auth, bodyParser(), validateBookUpdate, updateBook);
 router.del('/:id([0-9]{1,})', auth, deleteBook);
 
-// router.get('/:id([0-9]{1,})/authors', getAllAuthors);
+router.get('/:id([0-9]{1,})/author', getAuthor);
 
 // router.get('/:id([0-9]{1,})/reviews', getAllReviews);
 // router.post('/:id([0-9]{1,})/reviews', auth, bodyParser(), addReviewIDs, validateReview, addReview);
@@ -133,5 +137,34 @@ async function deleteBook(ctx){
         ctx.status = 404;
     }
 }
+
+async function getAuthor(ctx) {
+    let id = ctx.params.id;
+    let result = await model.getById(id);
+    if (result.length) {
+        let authorID = result[0].authorID;
+        let authorResult = await authorModel.getById(authorID);
+
+        if (authorResult.length) {
+            let body = authorResult[0];
+
+            const links = {
+                books: `${ctx.protocol}://${ctx.host}${authorPrefix}/${authorID}/books`
+            }
+            body.links = links;
+
+            ctx.body = body;
+            ctx.status = 200;
+
+        } else {
+            ctx.status = 404;
+        }
+    } else {
+        ctx.status = 404;
+    }
+
+}
+
+
 
 module.exports = router;
