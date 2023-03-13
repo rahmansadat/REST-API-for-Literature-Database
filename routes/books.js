@@ -14,6 +14,15 @@ router.get('/:id([0-9]{1,})', getById);
 router.put('/:id([0-9]{1,})', auth, bodyParser(), validateBookUpdate, updateBook);
 router.del('/:id([0-9]{1,})', auth, deleteBook);
 
+// router.get('/:id([0-9]{1,})/authors', getAllAuthors);
+
+// router.get('/:id([0-9]{1,})/reviews', getAllReviews);
+// router.post('/:id([0-9]{1,})/reviews', auth, bodyParser(), addReviewIDs, validateReview, addReview);
+
+// router.get('/:id([0-9]{1,})/genres', getAllGenres);
+// router.post('/:id([0-9]{1,})/genres/:gid([0-9]{1,})', auth, addGenre); // maybe bodyparser?
+// router.del('/:id([0-9]{1,})/genres/:gid([0-9]{1,})', auth, removeGenre);
+
 
 async function getAll(ctx) {
     let limit = 10; // number of records to return
