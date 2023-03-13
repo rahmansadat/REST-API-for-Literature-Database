@@ -1,10 +1,14 @@
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
+
 const model = require('../models/genres');
+const bookGenresModel = require('../models/bookGenres');
+
 const auth = require('../controllers/auth');
 const {validateGenre, validateGenreUpdate} = require('../controllers/validation');
 const can = require('../permissions/genres');
 
+const bookPrefix = '/api/v1/books';
 const prefix = '/api/v1/genres';
 const router = Router({prefix: prefix});
 
@@ -13,6 +17,8 @@ router.post('/', auth, bodyParser(), validateGenre, createGenre);
 router.get('/:id([0-9]{1,})', getById);
 router.put('/:id([0-9]{1,})', auth, bodyParser(), validateGenreUpdate, updateGenre);
 router.del('/:id([0-9]{1,})', auth, deleteGenre);
+
+router.get('/:id([0-9]{1,})/books', getBooks);
 
 async function getAll(ctx) {
     let limit = 10; // number of records to return
@@ -47,7 +53,7 @@ async function getById(ctx) {
         }
         body.links = links;
 
-        ctx.body
+        ctx.body = body;
         ctx.status = 200;
     } else {
         ctx.status = 404;
@@ -118,5 +124,36 @@ async function deleteGenre(ctx){
         ctx.status = 404;
     }
 }
+
+async function getBooks(ctx) {
+    let id = ctx.params.id;
+
+    let result = await model.getById(id);
+    if (result.length) {
+        let genresResult = await bookGenresModel.getAllBooks(id);
+        console.log(genresResult)
+        if (genresResult.length) {
+            const body = genresResult.map(post => {
+                const {ID, title, summary, datePublished, isbn, imageURL, authorID} = post;
+                const links = {
+                    reviews: `${ctx.protocol}://${ctx.host}${bookPrefix}/${post.ID}/reviews`,
+                    genres: `${ctx.protocol}://${ctx.host}${bookPrefix}/${post.ID}/genres`,
+                    author: `${ctx.protocol}://${ctx.host}${bookPrefix}/${post.ID}/author`,
+                    self: `${ctx.protocol}://${ctx.host}${bookPrefix}/${post.ID}`,
+                }
+                return {ID, title, summary, datePublished, isbn, imageURL, authorID, links};
+            });
+
+            ctx.body = body;
+            ctx.status = 200;
+        } else {
+            ctx.status = 404;
+        }
+    } else {
+        ctx.status = 404;
+    }
+}
+
+
 
 module.exports = router;

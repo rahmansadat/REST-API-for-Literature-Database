@@ -179,8 +179,8 @@ async function getReviews(ctx) {
         const body = result.map(post => {
             const {ID, rating, allText, dateCreated, dateModified, userID, bookID} = post;
             const links = {
-                self: `${ctx.protocol}://${ctx.host}${reviewPrefix}/${post.ID}`,
                 book: `${ctx.protocol}://${ctx.host}${prefix}/${id}`,
+                self: `${ctx.protocol}://${ctx.host}${reviewPrefix}/${post.ID}`
             }
             return {ID, rating, allText, dateCreated, dateModified, userID, bookID, links};
         });
@@ -194,19 +194,17 @@ async function getReviews(ctx) {
 
 
 async function getGenres(ctx) {
-    let limit = 10; // number of records to return
-    let order = 'rating'; // order based on specified column
     let id = ctx.params.id;
 
     let result = await model.getById(id);
     if (result.length) {
-        let genresResult = await bookGenresModel.getAll(id);
+        let genresResult = await bookGenresModel.getAllGenres(id);
         if (genresResult.length) {
             const body = genresResult.map(post => {
                 const {ID, name, description, imageURL, genreID, bookID} = post;
                 const links = {
-                    self: `${ctx.protocol}://${ctx.host}${genrePrefix}/${post.ID}`,
                     book: `${ctx.protocol}://${ctx.host}${prefix}/${id}`,
+                    self: `${ctx.protocol}://${ctx.host}${genrePrefix}/${post.ID}`,
                 }
                 return {ID, name, description, imageURL, genreID, bookID, links};
             });
