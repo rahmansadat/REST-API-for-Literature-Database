@@ -303,6 +303,32 @@ paths:
                 $ref: ./review.json#/definitions/reviewGetAll
         '404':
           description: Book or reviews not found.
+    post:
+      tags:
+        - Books
+      description: Create a new review for a book.
+      requestBody:
+        description: New review data.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ./review.json#/definitions/review
+      responses:
+        '201':
+          description: Review created.
+          content:
+            application/json:
+              schema:
+                $ref: ./review.json#/definitions/reviewCreated
+        '401':
+          description: Authentication is required to create a review.
+        '403':
+          description: Only non-admin users can create reviews.
+        '400':
+          description: Review creation failed because of unknown issue.
+        '404':
+          description: Book not found.
   /books/{id}/genres:
     parameters:
       - in: path
@@ -324,6 +350,58 @@ paths:
                 $ref: ./genre.json#/definitions/genreGetAll
         '404':
           description: Book or genres not found.
+  /books/{id}/genres/{gid}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: ID number of book
+      - in: path
+        name: gid
+        schema:
+          type: integer
+        required: true
+        description: ID number of genre
+    post:
+      tags:
+        - Books
+      description: Add a new genre to a book.
+      responses:
+        '201':
+          description: Genre added to book.
+          content:
+            application/json:
+              schema:
+                $ref: ./bookGenre.json#/definitions/genreAdded
+        '401':
+          description: Authentication is required to add a genre to a book.
+        '403':
+          description: Non-admin users cannot add genres to books.
+        '400':
+          description: Adding genre to book failed because of unknown issue.
+        '404':
+          description: Book or genre not found.
+    delete:
+      tags:
+        - Books
+      description: Remove an existing genre from a book.
+      responses:
+        '201':
+          description: Genre removed from book.
+          content:
+            application/json:
+              schema:
+                $ref: ./bookGenre.json#/definitions/genreRemoved
+        '401':
+          description: Authentication is required to remove a genre from a book.
+        '403':
+          description: Non-admin users cannot remove genres from books.
+        '400':
+          description: Removing genre from book failed because of unknown issue.
+        '404':
+          description: Book or genre not found.
   /genres:
     get:
       tags:
