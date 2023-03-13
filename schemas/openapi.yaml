@@ -303,6 +303,27 @@ paths:
                 $ref: ./review.json#/definitions/reviewGetAll
         '404':
           description: Book or reviews not found.
+  /books/{id}/genres:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: ID number of book
+    get:
+      tags:
+        - Books
+      description: Get all genres a book belongs to.
+      responses:
+        '200':
+          description: View of all genres.
+          content:
+            application/json:
+              schema:
+                $ref: ./genre.json#/definitions/genreGetAll
+        '404':
+          description: Book or genres not found.
   /genres:
     get:
       tags:
