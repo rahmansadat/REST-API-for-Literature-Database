@@ -39,3 +39,11 @@ exports.deleteById = async function deleteById (id) {
     let data = await db.run_query(query, values);
     return data;
 }
+
+// Get all books by author
+exports.getAllByAuthor = async function getAll (authorID) {
+    let query = "SELECT * FROM books WHERE authorID = ?";
+    let values = [authorID];
+    let data = await db.run_query(query, values);
+    return data;
+}
