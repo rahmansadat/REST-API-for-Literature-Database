@@ -7,8 +7,11 @@ const reviewModel = require('../models/reviews');
 const bookGenresModel = require('../models/bookGenres');
 
 const auth = require('../controllers/auth');
-const {validateBook, validateBookUpdate} = require('../controllers/validation');
+const {validateBook, validateBookUpdate, validateReview} = require('../controllers/validation');
 const can = require('../permissions/books');
+const reviewCan = require('../permissions/reviews');
+const bookGenresCan = require('../permissions/bookGenres');
+
 
 const genrePrefix = '/api/v1/genres';
 const reviewPrefix = '/api/v1/reviews';
@@ -25,11 +28,11 @@ router.del('/:id([0-9]{1,})', auth, deleteBook);
 router.get('/:id([0-9]{1,})/author', getAuthor);
 
 router.get('/:id([0-9]{1,})/reviews', getReviews);
-// router.post('/:id([0-9]{1,})/reviews', auth, bodyParser(), addReviewIDs, validateReview, addReview);
+router.post('/:id([0-9]{1,})/reviews', auth, bodyParser(), validateReview, addReview);
 
 router.get('/:id([0-9]{1,})/genres', getGenres);
-// router.post('/:id([0-9]{1,})/genres/:gid([0-9]{1,})', auth, addGenre); // maybe bodyparser?
-// router.del('/:id([0-9]{1,})/genres/:gid([0-9]{1,})', auth, removeGenre);
+router.post('/:id([0-9]{1,})/genres/:gid([0-9]{1,})', auth, addGenre);
+router.del('/:id([0-9]{1,})/genres/:gid([0-9]{1,})', auth, removeGenre);
 
 
 async function getAll(ctx) {
@@ -192,7 +195,6 @@ async function getReviews(ctx) {
     }
 }
 
-
 async function getGenres(ctx) {
     let id = ctx.params.id;
 
@@ -218,5 +220,74 @@ async function getGenres(ctx) {
         ctx.status = 404;
     }
 }
+
+async function addReview(ctx) {
+    let body = ctx.request.body;
+    let userID = ctx.state.user.ID;
+    let bookID = ctx.params.id;
+
+    let permission = reviewCan.create(ctx.state.user);
+    if (!permission.granted) {
+        ctx.status = 403;
+    } else {
+        body.userID = userID;
+        body.bookID = bookID;
+        let result = await reviewModel.add(body);
+        if (result.affectedRows) {
+            let id = result.insertId;
+            ctx.body = {ID: id, created: true, link: `${ctx.protocol}://${ctx.host}${reviewPrefix}/${id}`}
+            ctx.status = 201;
+        } else {
+            ctx.status = 400;
+        }
+    }
+}
+
+async function addGenre(ctx) {
+    let id = ctx.params.id;
+    let genreID = ctx.params.gid;
+
+    let permission = bookGenresCan.create(ctx.state.user);
+    if (!permission.granted) {
+        ctx.status = 403;
+    } else {
+        let data = {'bookID': id, 'genreID': genreID};
+        console.log('im here!!')
+        console.log(data)
+        let result = await bookGenresModel.addGenre(data)
+
+        if (result.affectedRows) {
+            let id = result.insertId;
+            ctx.body = {ID: id, created: true}
+            ctx.status = 201;
+
+        } else {
+            ctx.status = 400;
+        }
+    }
+
+}
+
+async function removeGenre(ctx) {
+    let id = ctx.params.id;
+    let genreID = ctx.params.gid;
+
+    let permission = bookGenresCan.create(ctx.state.user);
+    if (!permission.granted) {
+        ctx.status = 403;
+    } else {
+        let result = await bookGenresModel.removeGenre(id, genreID)
+
+        if (result.affectedRows) {
+            let id = result.insertId;
+            ctx.body = {ID: id, deleted: true}
+            ctx.status = 200;
+
+        } else {
+            ctx.status = 400;
+        }
+    }
+}
+
 
 module.exports = router;
