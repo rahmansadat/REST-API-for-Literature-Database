@@ -30,7 +30,6 @@ async function getAll(ctx) {
 
     let result = await model.getAll(limit, order);
     if (result.length) {
-
         const body = result.map(post => {
             const {ID, title, summary, datePublished, isbn, imageURL, authorID} = post;
             const links = {
@@ -62,7 +61,7 @@ async function getById(ctx) {
         }
         body.links = links;
 
-        ctx.body = body
+        ctx.body = body;
         ctx.status = 200;
     } else {
         ctx.status = 404;

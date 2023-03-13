@@ -5,7 +5,8 @@ const auth = require('../controllers/auth');
 const {validateUser, validateUserUpdate} = require('../controllers/validation');
 const can = require('../permissions/users');
 
-const router = Router({prefix: '/api/v1/users'});
+const prefix = '/api/v1/users';
+const router = Router({prefix: prefix});
 
 router.get('/', auth, getAll);
 router.post('/', bodyParser(), validateUser, createUser);
@@ -56,7 +57,8 @@ async function createUser(ctx) {
     let body = ctx.request.body;
     let result = await model.add(body);
     if (result.affectedRows) {
-        ctx.body = {ID: result.insertId, created: true}
+        let id = result.insertId;
+        ctx.body = {ID: id, created: true, link: `${ctx.request.path}${id}`}
         ctx.status = 201;
     } else {
         ctx.status = 400;
@@ -77,7 +79,7 @@ async function updateUser(ctx) {
             let newData = permission.filter(ctx.request.body);
             result = await model.updateById(newData, id);
             if (result.affectedRows) {
-                ctx.body = {ID: id, updated: true};
+                ctx.body = {ID: id, updated: true, link: ctx.request.path};
                 ctx.status = 200;
             } else {
                 ctx.status = 400;

@@ -5,7 +5,8 @@ const auth = require('../controllers/auth');
 const {validateReview, validateReviewUpdate} = require('../controllers/validation');
 const can = require('../permissions/reviews');
 
-const router = Router({prefix: '/api/v1/reviews'});
+const prefix = '/api/v1/reviews';
+const router = Router({prefix: prefix});
 
 router.get('/', getAll);
 router.post('/', auth, bodyParser(), validateReview, createReview);
@@ -48,7 +49,8 @@ async function createReview(ctx) {
         body.userID = userID;
         let result = await model.add(body);
         if (result.affectedRows) {
-            ctx.body = {ID: result.insertId, created: true}
+            let id = result.insertId;
+            ctx.body = {ID: id, created: true, link: `${ctx.request.path}${id}`}
             ctx.status = 201;
         } else {
             ctx.status = 400;
@@ -70,7 +72,7 @@ async function updateReview(ctx){
             let data = ctx.request.body;
             let result = await model.updateById(data, id);
             if (result.affectedRows) {
-                ctx.body = {ID: id, updated: true};
+                ctx.body = {ID: id, updated: true, link: ctx.request.path};
                 ctx.status = 200;
             } else {
                 ctx.status = 400;
