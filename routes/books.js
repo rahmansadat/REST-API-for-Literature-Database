@@ -70,7 +70,7 @@ async function createBook(ctx) {
         let result = await model.add(body);
         if (result.affectedRows) {
             let id = result.insertId
-            ctx.body = {ID: id, created: true, link: `${ctx.request.path}/${id}`}
+            ctx.body = {ID: id, created: true, link: `${ctx.request.path}${id}`}
             ctx.status = 201;
         } else {
             ctx.status = 400;
