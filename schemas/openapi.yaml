@@ -136,6 +136,27 @@ paths:
           description: Non-admin users cannot delete user records.
         '400':
           description: User deletion failed because of unknown issue.
+  /users/{id}/reviews:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: ID number of user
+    get:
+      tags:
+        - Users
+      description: Get all reviews made by a user.
+      responses:
+        '200':
+          description: View of all reviews.
+          content:
+            application/json:
+              schema:
+                $ref: ./review.json#/definitions/reviewGetAll
+        '404':
+          description: User or reviews not found.
   /books:
     get:
       tags:
