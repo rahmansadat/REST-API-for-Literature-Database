@@ -4,11 +4,13 @@ const bodyParser = require('koa-bodyparser');
 const model = require('../models/books');
 const authorModel = require('../models/authors');
 const reviewModel = require('../models/reviews');
+const bookGenresModel = require('../models/bookGenres');
 
 const auth = require('../controllers/auth');
 const {validateBook, validateBookUpdate} = require('../controllers/validation');
 const can = require('../permissions/books');
 
+const genrePrefix = '/api/v1/genres';
 const reviewPrefix = '/api/v1/reviews';
 const authorPrefix = '/api/v1/authors';
 const prefix = '/api/v1/books';
@@ -25,7 +27,7 @@ router.get('/:id([0-9]{1,})/author', getAuthor);
 router.get('/:id([0-9]{1,})/reviews', getReviews);
 // router.post('/:id([0-9]{1,})/reviews', auth, bodyParser(), addReviewIDs, validateReview, addReview);
 
-// router.get('/:id([0-9]{1,})/genres', getAllGenres);
+router.get('/:id([0-9]{1,})/genres', getGenres);
 // router.post('/:id([0-9]{1,})/genres/:gid([0-9]{1,})', auth, addGenre); // maybe bodyparser?
 // router.del('/:id([0-9]{1,})/genres/:gid([0-9]{1,})', auth, removeGenre);
 
@@ -191,5 +193,32 @@ async function getReviews(ctx) {
 }
 
 
+async function getGenres(ctx) {
+    let limit = 10; // number of records to return
+    let order = 'rating'; // order based on specified column
+    let id = ctx.params.id;
+
+    let result = await model.getById(id);
+    if (result.length) {
+        let genresResult = await bookGenresModel.getAll(id);
+        if (genresResult.length) {
+            const body = genresResult.map(post => {
+                const {ID, name, description, imageURL, genreID, bookID} = post;
+                const links = {
+                    self: `${ctx.protocol}://${ctx.host}${genrePrefix}/${post.ID}`,
+                    book: `${ctx.protocol}://${ctx.host}${prefix}/${id}`,
+                }
+                return {ID, name, description, imageURL, genreID, bookID, links};
+            });
+
+            ctx.body = body;
+            ctx.status = 200;
+        } else {
+            ctx.status = 404;
+        }
+    } else {
+        ctx.status = 404;
+    }
+}
 
 module.exports = router;
