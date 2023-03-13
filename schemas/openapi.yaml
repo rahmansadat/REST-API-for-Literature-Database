@@ -652,44 +652,6 @@ paths:
                 $ref: ./book.json#/definitions/bookGetAll
         '404':
           description: Author or books not found.
-  /reviews:
-    get:
-      tags:
-        - Reviews
-      description: Get all reviews.
-      responses:
-        '200':
-          description: View of all reviews.
-          content:
-            application/json:
-              schema:
-                $ref: ./review.json#/definitions/reviewGetAll
-        '404':
-          description: No reviews found.
-    post:
-      tags:
-        - Reviews
-      description: Create a new review.
-      requestBody:
-        description: New review data.
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: ./review.json#/definitions/review
-      responses:
-        '201':
-          description: Review created.
-          content:
-            application/json:
-              schema:
-                $ref: ./review.json#/definitions/reviewCreated
-        '401':
-          description: Authentication is required to create a review.
-        '403':
-          description: Only non-admin users can create reviews.
-        '400':
-          description: Review creation failed because of unknown issue.
   /reviews/{id}:
     parameters:
       - in: path
