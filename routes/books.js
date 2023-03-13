@@ -233,13 +233,19 @@ async function addReview(ctx) {
     } else {
         body.userID = userID;
         body.bookID = bookID;
-        let result = await reviewModel.add(body);
-        if (result.affectedRows) {
-            let id = result.insertId;
-            ctx.body = {ID: id, created: true, link: `${ctx.protocol}://${ctx.host}${reviewPrefix}/${id}`}
-            ctx.status = 201;
+
+        let result = await model.getById(bookID);
+        if (result.length) {
+            let result = await reviewModel.add(body);
+            if (result.affectedRows) {
+                let id = result.insertId;
+                ctx.body = {ID: id, created: true, link: `${ctx.protocol}://${ctx.host}${reviewPrefix}/${id}`}
+                ctx.status = 201;
+            } else {
+                ctx.status = 400;
+            }
         } else {
-            ctx.status = 400;
+            ctx.status = 404;
         }
     }
 }
