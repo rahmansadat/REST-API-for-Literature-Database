@@ -12,7 +12,7 @@ const can = require('../permissions/books');
 const reviewCan = require('../permissions/reviews');
 const bookGenresCan = require('../permissions/bookGenres');
 
-
+const userPrefix = '/api/v1/users';
 const genrePrefix = '/api/v1/genres';
 const reviewPrefix = '/api/v1/reviews';
 const authorPrefix = '/api/v1/authors';
@@ -176,13 +176,14 @@ async function getReviews(ctx) {
     let order = 'rating'; // order based on specified column
     let id = ctx.params.id;
 
-    let result = await reviewModel.getAll(id, order, limit);
+    let result = await reviewModel.getAllByBook(id, order, limit);
     if (result.length) {
 
         const body = result.map(post => {
             const {ID, rating, allText, dateCreated, dateModified, userID, bookID} = post;
             const links = {
                 book: `${ctx.protocol}://${ctx.host}${prefix}/${id}`,
+                user: `${ctx.protocol}://${ctx.host}${userPrefix}/${post.userID}`,
                 self: `${ctx.protocol}://${ctx.host}${reviewPrefix}/${post.ID}`
             }
             return {ID, rating, allText, dateCreated, dateModified, userID, bookID, links};

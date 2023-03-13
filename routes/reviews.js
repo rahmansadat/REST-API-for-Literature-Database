@@ -5,6 +5,7 @@ const auth = require('../controllers/auth');
 const {validateReview, validateReviewUpdate} = require('../controllers/validation');
 const can = require('../permissions/reviews');
 
+const userPrefix = '/api/v1/users';
 const bookPrefix = '/api/v1/books';
 const prefix = '/api/v1/reviews';
 const router = Router({prefix: prefix});
@@ -32,10 +33,11 @@ async function getById(ctx) {
     let id = ctx.params.id;
     let review = await model.getById(id);
     if (review.length) {
-        body = review[0];
+        let body = review[0];
 
         const links = {
-            book: `${ctx.protocol}://${ctx.host}${bookPrefix}/${body.bookID}`
+            book: `${ctx.protocol}://${ctx.host}${bookPrefix}/${body.bookID}`,
+            user: `${ctx.protocol}://${ctx.host}${userPrefix}/${body.userID}`
         }
         body.links = links;
 
