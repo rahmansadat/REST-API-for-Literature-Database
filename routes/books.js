@@ -4,6 +4,7 @@ const bodyParser = require('koa-bodyparser');
 const model = require('../models/books');
 const authorModel = require('../models/authors');
 const reviewModel = require('../models/reviews');
+const genresModel = require('../models/genres');
 const bookGenresModel = require('../models/bookGenres');
 
 const auth = require('../controllers/auth');
@@ -258,19 +259,24 @@ async function addGenre(ctx) {
     if (!permission.granted) {
         ctx.status = 403;
     } else {
-        let data = {'bookID': id, 'genreID': genreID};
-        console.log('im here!!')
-        console.log(data)
-        let result = await bookGenresModel.addGenre(data)
+        let bookResult = await model.getById(id)
+        let genreResult = await genresModel.getById(genreID);
 
-        if (result.affectedRows) {
-            let id = result.insertId;
-            ctx.body = {ID: id, created: true}
-            ctx.status = 201;
+        if (bookResult.length && genreResult.length) {
+            let data = {'bookID': id, 'genreID': genreID};
+            let result = await bookGenresModel.addGenre(data)
 
+            if (result.affectedRows) {
+                let id = result.insertId;
+                ctx.body = {ID: id, created: true}
+                ctx.status = 201;
+
+            } else {
+                ctx.status = 400;
+            }
         } else {
-            ctx.status = 400;
-        }
+            ctx.status = 404;
+        } 
     }
 
 }
@@ -283,15 +289,17 @@ async function removeGenre(ctx) {
     if (!permission.granted) {
         ctx.status = 403;
     } else {
-        let result = await bookGenresModel.removeGenre(id, genreID)
+        let bookResult = await model.getById(id)
+        let genreResult = await genresModel.getById(genreID);
 
-        if (result.affectedRows) {
-            let id = result.insertId;
-            ctx.body = {ID: id, deleted: true}
-            ctx.status = 200;
-
-        } else {
-            ctx.status = 400;
+        if (bookResult.length && genreResult.length) {
+            let result = await bookGenresModel.removeGenre(id, genreID)
+            if (result.affectedRows) {
+                ctx.body = {'bookID': id, 'genreID': genreID, deleted: true}
+                ctx.status = 200;
+            } else {
+                ctx.status = 400;
+            }
         }
     }
 }
