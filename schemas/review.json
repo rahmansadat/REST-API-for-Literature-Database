@@ -16,14 +16,9 @@
                 "allText": {
                     "description": "Full body of review",
                     "type": "string"
-                },
-                "bookID": {
-                    "description": "ID of the book the review is about",
-                    "type": "integer",
-                    "minimum": 0
                 }
             },
-            "required": ["rating", "allText", "bookID"],
+            "required": ["rating", "allText"],
             "additionalProperties": false
         },
         
