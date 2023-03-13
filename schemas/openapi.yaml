@@ -261,6 +261,48 @@ paths:
           description: Non-admin users cannot delete books.
         '400':
           description: Book deletion failed because of unknown issue.
+  /books/{id}/author:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: ID number of book
+    get:
+      tags:
+        - Books
+      description: Get the author that wrote a book.
+      responses:
+        '200':
+          description: View of an author.
+          content:
+            application/json:
+              schema:
+                $ref: ./author.json#/definitions/authorGet
+        '404':
+          description: Book or author not found.
+  /books/{id}/reviews:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: ID number of book
+    get:
+      tags:
+        - Books
+      description: Get all reviews for a book.
+      responses:
+        '200':
+          description: View of all reviews.
+          content:
+            application/json:
+              schema:
+                $ref: ./review.json#/definitions/reviewGetAll
+        '404':
+          description: Book or reviews not found.
   /genres:
     get:
       tags:
@@ -365,6 +407,27 @@ paths:
           description: Non-admin users cannot delete genres.
         '400':
           description: Genre deletion failed because of unknown issue.
+  /genres/{id}/books:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: ID number of genre
+    get:
+      tags:
+        - Genres
+      description: Get all books that belong in a genre.
+      responses:
+        '200':
+          description: View of all books.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/bookGetAll
+        '404':
+          description: No book or genres found.
   /authors:
     get:
       tags:
@@ -469,7 +532,7 @@ paths:
           description: Non-admin users cannot delete authors.
         '400':
           description: Author deletion failed because of unknown issue.
-  /authors{id}/books:
+  /authors/{id}/books:
     parameters:
       - in: path
         name: id
