@@ -3,11 +3,13 @@ const bodyParser = require('koa-bodyparser');
 
 const model = require('../models/books');
 const authorModel = require('../models/authors');
+const reviewModel = require('../models/reviews');
 
 const auth = require('../controllers/auth');
 const {validateBook, validateBookUpdate} = require('../controllers/validation');
 const can = require('../permissions/books');
 
+const reviewPrefix = '/api/v1/reviews';
 const authorPrefix = '/api/v1/authors';
 const prefix = '/api/v1/books';
 const router = Router({prefix: prefix});
@@ -20,7 +22,7 @@ router.del('/:id([0-9]{1,})', auth, deleteBook);
 
 router.get('/:id([0-9]{1,})/author', getAuthor);
 
-// router.get('/:id([0-9]{1,})/reviews', getAllReviews);
+router.get('/:id([0-9]{1,})/reviews', getReviews);
 // router.post('/:id([0-9]{1,})/reviews', auth, bodyParser(), addReviewIDs, validateReview, addReview);
 
 // router.get('/:id([0-9]{1,})/genres', getAllGenres);
@@ -162,7 +164,30 @@ async function getAuthor(ctx) {
     } else {
         ctx.status = 404;
     }
+}
 
+async function getReviews(ctx) {
+    let limit = 10; // number of records to return
+    let order = 'rating'; // order based on specified column
+    let id = ctx.params.id;
+
+    let result = await reviewModel.getAll(id, order, limit);
+    if (result.length) {
+
+        const body = result.map(post => {
+            const {ID, rating, allText, dateCreated, dateModified, userID, bookID} = post;
+            const links = {
+                self: `${ctx.protocol}://${ctx.host}${reviewPrefix}/${post.ID}`,
+                book: `${ctx.protocol}://${ctx.host}${prefix}/${id}`,
+            }
+            return {ID, rating, allText, dateCreated, dateModified, userID, bookID, links};
+        });
+
+        ctx.body = body;
+        ctx.status = 200;
+    } else {
+        ctx.status = 404;
+    }
 }
 
 

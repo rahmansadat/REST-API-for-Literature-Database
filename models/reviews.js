@@ -9,9 +9,9 @@ exports.getById = async function getById (id) {
 }
 
 // Get all reviews
-exports.getAll = async function getAll (limit, order) {
-    let query = "SELECT * FROM reviews ORDER BY ?? LIMIT ?";
-    let values = [order, limit];
+exports.getAll = async function getAll (bookID, order, limit) {
+    let query = "SELECT * FROM reviews WHERE bookID = ? ORDER BY ?? LIMIT ?";
+    let values = [bookID, order, limit];
     let data = await db.run_query(query, values);
     return data;
 }
