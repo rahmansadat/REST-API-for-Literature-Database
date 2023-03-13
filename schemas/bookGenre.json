@@ -1,0 +1,45 @@
+{
+    "schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {
+        "genreAdded": {
+            "id": "/genreAdded",
+            "title": "Genre Added",
+            "description": "Confirmation of a successful genre-book relationship creation",
+            "type": "object",
+            "properties": {
+                "ID": {
+                    "description": "ID of the genre-book relationship created",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "created": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
+        }, 
+
+        "genreRemoved": {
+            "id": "/genreRemoved",
+            "title": "Genre Removed",
+            "description": "Confirmation of a successful genre-book relationship removal",
+            "type": "object",
+            "properties": {
+                "bookID": {
+                    "description": "ID of the book that the genre was removed from",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "genreID": {
+                    "description": "ID of the genre removed from the book",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "deleted": {
+                    "description": "Boolean value indicating success",
+                    "type": "boolean"
+                }
+            }
+        }
+    }
+}
