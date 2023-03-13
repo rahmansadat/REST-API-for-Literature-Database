@@ -1,10 +1,15 @@
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
+
 const model = require('../models/users');
+const reviewModel = require('../models/reviews');
+
 const auth = require('../controllers/auth');
 const {validateUser, validateUserUpdate} = require('../controllers/validation');
 const can = require('../permissions/users');
 
+const reviewPrefix = '/api/v1/reviews';
+const bookPrefix = '/api/v1/books';
 const prefix = '/api/v1/users';
 const router = Router({prefix: prefix});
 
@@ -13,6 +18,8 @@ router.post('/', bodyParser(), validateUser, createUser);
 router.get('/:id([0-9]{1,})', auth, getById);
 router.put('/:id([0-9]{1,})', auth, bodyParser(), validateUserUpdate, updateUser);
 router.del('/:id([0-9]{1,})', auth, deleteUser);
+
+router.get('/:id([0-9]{1,})/reviews', getReviews);
 
 async function getAll(ctx) {
     let limit = 10; // number of records to return
@@ -25,7 +32,16 @@ async function getAll(ctx) {
         if (!permission.granted) {
             ctx.status = 403;
         } else {
-            ctx.body = data;
+            const body = data.map(post => {
+                const {ID, role, firstName, lastName, username, about, dateRegistered, email, avatarURL} = post;
+                const links = {
+                    reviews: `${ctx.protocol}://${ctx.host}${prefix}/${post.ID}/reviews`,
+                    self: `${ctx.protocol}://${ctx.host}${prefix}/${post.ID}`
+                }
+                return {ID, role, firstName, lastName, username, about, dateRegistered, email, avatarURL, links};
+            });
+
+            ctx.body = body;
             ctx.status = 200;
         }
     } else {
@@ -45,6 +61,12 @@ async function getById(ctx) {
             ctx.status = 403;
         } else {
             let body = permission.filter(data);
+
+            const links = {
+                reviews: `${ctx.protocol}://${ctx.host}${prefix}/${id}/reviews`,
+            }
+            body.links = links
+
             ctx.body = body;
             ctx.status = 200;
         }
@@ -58,7 +80,7 @@ async function createUser(ctx) {
     let result = await model.add(body);
     if (result.affectedRows) {
         let id = result.insertId;
-        ctx.body = {ID: id, created: true, link: `${ctx.request.path}${id}`}
+        ctx.body = {ID: id, created: true, link: `${ctx.request.path}/${id}`}
         ctx.status = 201;
     } else {
         ctx.status = 400;
@@ -109,6 +131,29 @@ async function deleteUser(ctx){
                 ctx.status = 400;
             }
         }    
+    } else {
+        ctx.status = 404;
+    }
+}
+
+async function getReviews(ctx) {
+    let limit = 10; // number of records to return
+    let order = 'rating'; // order based on specified column
+    let id = ctx.params.id;
+
+    let result = await reviewModel.getAllByUser(id, order, limit);
+    if (result.length) {
+        const body = result.map(post => {
+            const {ID, rating, allText, dateCreated, dateModified, userID, bookID} = post;
+            const links = {
+                book: `${ctx.protocol}://${ctx.host}${bookPrefix}/${post.bookID}`,
+                user: `${ctx.protocol}://${ctx.host}${prefix}/${id}`,
+                self: `${ctx.protocol}://${ctx.host}${reviewPrefix}/${post.ID}`
+            }
+            return {ID, rating, allText, dateCreated, dateModified, userID, bookID, links};
+        });
+        ctx.body = body;
+        ctx.status = 200;
     } else {
         ctx.status = 404;
     }
