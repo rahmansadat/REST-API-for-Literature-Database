@@ -5,7 +5,8 @@ const auth = require('../controllers/auth');
 const {validateBook, validateBookUpdate} = require('../controllers/validation');
 const can = require('../permissions/books');
 
-const router = Router({prefix: '/api/v1/books'});
+const prefix = '/api/v1/books';
+const router = Router({prefix: prefix});
 
 router.get('/', getAll);
 router.post('/', auth, bodyParser(), validateBook, createBook);
@@ -13,13 +14,26 @@ router.get('/:id([0-9]{1,})', getById);
 router.put('/:id([0-9]{1,})', auth, bodyParser(), validateBookUpdate, updateBook);
 router.del('/:id([0-9]{1,})', auth, deleteBook);
 
+
 async function getAll(ctx) {
     let limit = 10; // number of records to return
     let order = 'title'; // order based on specified column
 
-    let books = await model.getAll(limit, order);
-    if (books.length) {
-        ctx.body = books;
+    let result = await model.getAll(limit, order);
+    if (result.length) {
+
+        const body = result.map(post => {
+            const {ID, title, summary, datePublished, isbn, imageURL, authorID} = post;
+            const links = {
+                reviews: `${ctx.protocol}://${ctx.host}${prefix}/${post.ID}/reviews`,
+                genres: `${ctx.protocol}://${ctx.host}${prefix}/${post.ID}/genres`,
+                author: `${ctx.protocol}://${ctx.host}${prefix}/${post.ID}/author`,
+                self: `${ctx.protocol}://${ctx.host}${prefix}/${post.ID}`
+            }
+            return {ID, title, summary, datePublished, isbn, imageURL, authorID, links};
+        });
+
+        ctx.body = body;
         ctx.status = 200;
     } else {
         ctx.status = 404;
@@ -28,9 +42,18 @@ async function getAll(ctx) {
 
 async function getById(ctx) {
     let id = ctx.params.id;
-    let book = await model.getById(id);
-    if (book.length) {
-        ctx.body = book[0];
+    let result = await model.getById(id);
+    if (result.length) {
+        let body = result[0];
+
+        const links = {
+            reviews: `${ctx.protocol}://${ctx.host}${prefix}/${body.ID}/reviews`,
+            genres: `${ctx.protocol}://${ctx.host}${prefix}/${body.ID}/genres`,
+            author: `${ctx.protocol}://${ctx.host}${prefix}/${body.ID}/author`,
+        }
+        body.links = links;
+
+        ctx.body = body
         ctx.status = 200;
     } else {
         ctx.status = 404;
@@ -46,7 +69,8 @@ async function createBook(ctx) {
     } else {
         let result = await model.add(body);
         if (result.affectedRows) {
-            ctx.body = {ID: result.insertId, created: true}
+            let id = result.insertId
+            ctx.body = {ID: id, created: true, link: `${ctx.request.path}/${id}`}
             ctx.status = 201;
         } else {
             ctx.status = 400;
@@ -67,7 +91,7 @@ async function updateBook(ctx){
             let data = ctx.request.body;
             let result = await model.updateById(data, id);
             if (result.affectedRows) {
-                ctx.body = {ID: id, updated: true};
+                ctx.body = {ID: id, updated: true, link: ctx.request.path};
                 ctx.status = 200;
             } else {
                 ctx.status = 400;
