@@ -201,12 +201,12 @@ async function getGenres(ctx) {
         let genresResult = await bookGenresModel.getAllGenres(id);
         if (genresResult.length) {
             const body = genresResult.map(post => {
-                const {ID, name, description, imageURL, genreID, bookID} = post;
+                const {ID, name, description, imageURL} = post;
                 const links = {
-                    book: `${ctx.protocol}://${ctx.host}${prefix}/${id}`,
+                    books: `${ctx.protocol}://${ctx.host}${genrePrefix}/${post.ID}/books`, //wait
                     self: `${ctx.protocol}://${ctx.host}${genrePrefix}/${post.ID}`,
                 }
-                return {ID, name, description, imageURL, genreID, bookID, links};
+                return {ID, name, description, imageURL, links};
             });
 
             ctx.body = body;
