@@ -5,6 +5,7 @@ const auth = require('../controllers/auth');
 const {validateReview, validateReviewUpdate} = require('../controllers/validation');
 const can = require('../permissions/reviews');
 
+const bookPrefix = '/api/v1/books';
 const prefix = '/api/v1/reviews';
 const router = Router({prefix: prefix});
 
@@ -31,7 +32,14 @@ async function getById(ctx) {
     let id = ctx.params.id;
     let review = await model.getById(id);
     if (review.length) {
-        ctx.body = review[0];
+        body = review[0];
+
+        const links = {
+            book: `${ctx.protocol}://${ctx.host}${bookPrefix}/${body.bookID}`
+        }
+        body.links = links;
+
+        ctx.body = body
         ctx.status = 200;
     } else {
         ctx.status = 404;
@@ -50,7 +58,7 @@ async function createReview(ctx) {
         let result = await model.add(body);
         if (result.affectedRows) {
             let id = result.insertId;
-            ctx.body = {ID: id, created: true, link: `${ctx.request.path}${id}`}
+            ctx.body = {ID: id, created: true, link: `${ctx.request.path}/${id}`}
             ctx.status = 201;
         } else {
             ctx.status = 400;
