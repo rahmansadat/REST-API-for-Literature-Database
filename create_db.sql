@@ -69,6 +69,15 @@ CREATE TABLE reviews (
     FOREIGN KEY (userID) REFERENCES users (ID) ON DELETE CASCADE,
     FOREIGN KEY (bookID) REFERENCES books (ID) ON DELETE CASCADE);
 
+CREATE TABLE openLibrary (
+    ID INT NOT NULL AUTO_INCREMENT,
+    firstSentence VARCHAR(1024),
+    pageCount INT,
+    bookID INT NOT NULL,
+    PRIMARY KEY (ID),
+    FOREIGN KEY (bookID) REFERENCES books (ID) ON DELETE CASCADE);
+
+
 -- Code to populate database.
 
 INSERT INTO roles (name) VALUES ('user');
