@@ -25,10 +25,8 @@ tags:
     description: Perform CRUD operations on reviews.
 paths:
   /users:
-    summary: Represents an individual user
-    description: >
-      This resource represents an individual user in the system.
-      Each user is identified by a numeric `id`.
+    summary: Represents all users
+    description: This path represents all users in the system.
     get:
       tags:
         - Users
@@ -67,6 +65,10 @@ paths:
         '400':
           description: User creation failed because of unknown issue.
   /users/{id}:
+    summary: Represents an individual user
+    description: >
+      This path represents an individual user in the system.
+      Each user is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
@@ -137,6 +139,10 @@ paths:
         '400':
           description: User deletion failed because of unknown issue.
   /users/{id}/reviews:
+    summary: Represents all reviews made by an individual user
+    description: >
+      This path represents all reviews made by an individual user in the system.
+      Each user is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
@@ -158,6 +164,8 @@ paths:
         '404':
           description: User or reviews not found.
   /books:
+    summary: Represents all books
+    description: This path represents all books in the system.
     get:
       tags:
         - Books
@@ -196,6 +204,10 @@ paths:
         '400':
           description: Book creation failed because of unknown issue.
   /books/{id}:
+    summary: Represents an individual book
+    description: >
+      This path represents an individual book in the system.
+      Each book is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
@@ -262,6 +274,10 @@ paths:
         '400':
           description: Book deletion failed because of unknown issue.
   /books/{id}/author:
+    summary: Represents the author of an individual book
+    description: >
+      This path represents the author of an individual book in the system.
+      Each book is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
@@ -283,6 +299,10 @@ paths:
         '404':
           description: Book or author not found.
   /books/{id}/reviews:
+    summary: Represents all reviews made on an individual book
+    description: >
+      This path represents all reviews made on an individual book in the system.
+      Each user is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
@@ -330,6 +350,10 @@ paths:
         '404':
           description: Book not found.
   /books/{id}/genres:
+    summary: Represents all genres that an individual book belongs to
+    description: >
+      This path represents all genres an individual book in the system belongs to.
+      Each book is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
@@ -351,6 +375,11 @@ paths:
         '404':
           description: Book or genres not found.
   /books/{id}/genres/{gid}:
+    summary: Represents the relation between an individual book and an individual genre.
+    description: >
+      This path represents the relation between an individual book and an individual genre in the system.
+      Each book is identified by a numeric `id`.
+      Each genre is identified by a numeric `gid`.
     parameters:
       - in: path
         name: id
@@ -403,6 +432,8 @@ paths:
         '404':
           description: Book or genre not found.
   /genres:
+    summary: Represents all genres
+    description: This path represents all genres in the system.
     get:
       tags:
         - Genres
@@ -441,6 +472,10 @@ paths:
         '400':
           description: Genre creation failed because of unknown issue.
   /genres/{id}:
+    summary: Represents an individual genre
+    description: >
+      This path represents an individual genre in the system.
+      Each genre is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
@@ -507,6 +542,10 @@ paths:
         '400':
           description: Genre deletion failed because of unknown issue.
   /genres/{id}/books:
+    summary: Represents all books that belong to an individual genre.
+    description: >
+      This path represents all books that belong to an individual genre in the system.
+      Each genre is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
@@ -528,6 +567,8 @@ paths:
         '404':
           description: No book or genres found.
   /authors:
+    summary: Represents all authors
+    description: This path represents all authors in the system.
     get:
       tags:
         - Authors
@@ -566,6 +607,10 @@ paths:
         '400':
           description: Author creation failed because of unknown issue.
   /authors/{id}:
+    summary: Represents an individual author
+    description: >
+      This path represents an individual author in the system.
+      Each author is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
@@ -632,6 +677,10 @@ paths:
         '400':
           description: Author deletion failed because of unknown issue.
   /authors/{id}/books:
+    summary: Represents all books written by an individual author
+    description: >
+      This path represents all books written by an individual author in the system.
+      Each author is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
@@ -653,6 +702,10 @@ paths:
         '404':
           description: Author or books not found.
   /reviews/{id}:
+    summary: Represents an individual review
+    description: >
+      This path represents an individual review in the system.
+      Each review is identified by a numeric `id`.
     parameters:
       - in: path
         name: id
