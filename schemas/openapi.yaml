@@ -431,6 +431,56 @@ paths:
           description: Removing genre from book failed because of unknown issue.
         '404':
           description: Book or genre not found.
+  /books/{id}/firstSentence:
+    summary: Represents the first sentence of an individual book
+    description: >
+      This path represents the first sentence of an individual book in the system.
+      Each book is identified by a numeric `id`.
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: ID number of book
+    get:
+      tags:
+        - Books
+      description: Get the first sentence of a book.
+      responses:
+        '200':
+          description: View of the first sentence.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/getFirstSentence
+        '404':
+          description: Book or first sentence not found.
+  /books/{id}/pageCount:
+    summary: Represents the page count of an individual book
+    description: >
+      This path represents the page count of an individual book in the system.
+      Each book is identified by a numeric `id`.
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+        description: ID number of book
+    get:
+      tags:
+        - Books
+      description: Get the page count of a book.
+      responses:
+        '200':
+          description: View of the page count.
+          content:
+            application/json:
+              schema:
+                $ref: ./book.json#/definitions/getPageCount
+        '404':
+          description: Book or page count not found.
   /genres:
     summary: Represents all genres
     description: This path represents all genres in the system.
