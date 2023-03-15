@@ -120,3 +120,9 @@ INSERT INTO reviews (rating, allText, userID, bookID) VALUES
     (8, "Such a cute book with lovable characters! Alaska is literally me!", 2, 3),
     (4, "Too scary for me.", 2, 2),
     (10, "An absolute masterpiece. Highly recommend.", 3, 1);
+
+INSERT INTO openLibrary (firstSentence, pageCount, bookID) VALUES
+    ('In a hole in the ground there lived a hobbit.', 310, 1),
+    (null, 560, 2),
+    ('THE WEEK BEFORE I left my family and Florida and the rest of my minor life to go to boarding school in Alabama, my mother insisted on throwing me a going-away party.', 288, 3),
+    ('There was Eru, the One, who in Arda is named Iluvatar: and he made first the Ainur, the Holy Ones, that were the offspring of his thought; and they were with him before aught else was made.', 420, 4);
