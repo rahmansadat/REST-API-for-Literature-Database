@@ -1,11 +1,14 @@
 const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser');
 
+const OpenLibraryAPI = require('../integrations/openLibrary/openLibrary-api.js');
+
 const model = require('../models/books');
 const authorModel = require('../models/authors');
 const reviewModel = require('../models/reviews');
 const genresModel = require('../models/genres');
 const bookGenresModel = require('../models/bookGenres');
+const openLibraryModel = require('../models/openLibrary');
 
 const auth = require('../controllers/auth');
 const {validateBook, validateBookUpdate, validateReview} = require('../controllers/validation');
@@ -34,6 +37,9 @@ router.post('/:id([0-9]{1,})/reviews', auth, bodyParser(), validateReview, addRe
 router.get('/:id([0-9]{1,})/genres', getGenres);
 router.post('/:id([0-9]{1,})/genres/:gid([0-9]{1,})', auth, addGenre);
 router.del('/:id([0-9]{1,})/genres/:gid([0-9]{1,})', auth, removeGenre);
+
+router.get('/:id([0-9]{1,})/firstSentence', getFirstSentence);
+router.get('/:id([0-9]{1,})/pageCount', getPagesCount);
 
 
 async function getAll(ctx) {
@@ -90,6 +96,11 @@ async function createBook(ctx) {
         let result = await model.add(body);
         if (result.affectedRows) {
             let id = result.insertId
+
+            // Get data from OpenLibrary API and then store it in the database.
+            let openLibraryData = await OpenLibraryAPI.getBookData(body.title)
+            storeOpenLibraryData(openLibraryData, id)
+
             ctx.body = {ID: id, created: true, link: `${ctx.request.path}${id}`}
             ctx.status = 201;
         } else {
@@ -303,6 +314,78 @@ async function removeGenre(ctx) {
         }
     }
 }
+
+async function getFirstSentence(ctx) {
+    let id = ctx.params.id;
+
+    let bookResult = await model.getById(id);
+    if (bookResult.length) {
+        let openLibraryResult = await openLibraryModel.get(id);
+        if (openLibraryResult.length) {
+            if (openLibraryResult[0].firstSentence !== null) {
+                console.log(openLibraryResult[0])
+                ctx.body = {'bookID': id, 'bookTitle': bookResult[0].title, 'firstSentence': openLibraryResult[0].firstSentence}
+                ctx.status = 200;
+            } else {
+                ctx.status = 404;
+            }
+        } else {
+            ctx.status = 404;
+        }
+    } else {
+        ctx.status = 404;
+    }
+}
+
+async function getPagesCount(ctx) {
+    let id = ctx.params.id;
+    let bookResult = await model.getById(id);
+    if (bookResult.length) {
+        let openLibraryResult = await openLibraryModel.get(id);
+        if (openLibraryResult.length) {
+            if (openLibraryResult[0].pageCount !== null) {
+                ctx.body = {'bookID': id, 'bookTitle': bookResult[0].title, 'pageCount': openLibraryResult[0].pageCount}
+                ctx.status = 200;
+            } else {
+                ctx.status = 404;
+            }
+        } else {
+            ctx.status = 404;
+        }
+    } else {
+        ctx.status = 404;
+    }
+}
+
+function storeOpenLibraryData(openLibraryData, id) {
+    console.log("1")
+    if (openLibraryData !== undefined) { //if data was returned from OpenLibrary
+        console.log("2")
+        let data = {};
+
+        let OLbookData = openLibraryData.docs[0];
+
+        if (OLbookData.hasOwnProperty('first_sentence')) {
+            console.log("3")
+            data['firstSentence'] = OLbookData.first_sentence[0];
+        }
+
+        if (OLbookData.hasOwnProperty('number_of_pages_median')) {
+            console.log("4")
+            data['pageCount'] = OLbookData.number_of_pages_median;
+        }
+
+        if (data.hasOwnProperty('firstSentence') || data.hasOwnProperty('pageCount')) {
+            data["bookID"] = id;
+        }
+
+        console.log("5")
+        openLibraryModel.add(data);
+        console.log("6")
+    }    
+}
+
+
 
 
 module.exports = router;
