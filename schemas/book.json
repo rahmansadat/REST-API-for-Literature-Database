@@ -164,6 +164,50 @@
       "description": "All books data on the response body",
       "type": "array",
       "items": {"$ref": "#/definitions/bookGet"}
+    }, 
+
+    "getFirstSentence": {
+      "id": "/getFirstSentence",
+      "title": " Get First Sentence",
+      "description": "First sentence of a book on the response body",
+      "type": "object",
+      "properties": {
+        "bookID": {
+          "description": "ID of the book",
+          "type": "integer",
+          "minimum": 0
+        },
+        "bookTitle": {
+          "description": "Title of the book",
+          "type": "string"
+        }, 
+        "firstSentence": {
+          "description": "First sentence of the book",
+          "type": "string"
+        }
+      }
+    }, 
+
+    "getPageCount": {
+      "id": "/getPageCount",
+      "title": " Get Page Count",
+      "description": "Page count of a book on the response body",
+      "type": "object",
+      "properties": {
+        "bookID": {
+          "description": "ID of the book",
+          "type": "integer",
+          "minimum": 0
+        },
+        "bookTitle": {
+          "description": "Title of the book",
+          "type": "string"
+        }, 
+        "pageCount": {
+          "description": "Page count of the book",
+          "type": "integer"
+        }
+      }
     }
   }
 }
