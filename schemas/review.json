@@ -60,7 +60,8 @@
             "properties": {
                 "ID": {
                     "description": "ID of the created review",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "created": {
                     "description": "Boolean value indicating success",
@@ -77,7 +78,8 @@
             "properties": {
                 "ID": {
                     "description": "ID of the updated review",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "updated": {
                     "description": "Boolean value indicating success",
@@ -94,7 +96,8 @@
             "properties": {
                 "ID": {
                     "description": "ID of the deleted review",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "deleted": {
                     "description": "Boolean value indicating success",

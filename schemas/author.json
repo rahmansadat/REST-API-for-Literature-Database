@@ -56,7 +56,8 @@
             "properties": {
                 "ID": {
                     "description": "ID of the created author",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "created": {
                     "description": "Boolean value indicating success",
@@ -73,7 +74,8 @@
             "properties": {
                 "ID": {
                     "description": "ID of the updated author",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "updated": {
                     "description": "Boolean value indicating success",
@@ -90,7 +92,8 @@
             "properties": {
                 "ID": {
                     "description": "ID of the deleted author",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "deleted": {
                     "description": "Boolean value indicating success",

@@ -56,7 +56,8 @@
             "properties": {
                 "ID": {
                     "description": "ID of the created genre",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "created": {
                     "description": "Boolean value indicating success",
@@ -73,7 +74,8 @@
             "properties": {
                 "ID": {
                     "description": "ID of the updated genre",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "updated": {
                     "description": "Boolean value indicating success",
@@ -90,7 +92,8 @@
             "properties": {
                 "ID": {
                     "description": "ID of the deleted genre",
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "deleted": {
                     "description": "Boolean value indicating success",
