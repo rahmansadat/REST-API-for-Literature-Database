@@ -110,7 +110,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: ./user.json#/definitions/userCreated
+                $ref: ./user.json#/definitions/userUpdated
         '404':
           description: User not found.
         '401':
