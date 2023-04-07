@@ -23,5 +23,9 @@
     "passport-http": "^0.3.0",
     "promise-mysql": "^5.2.0",
     "role-acl": "^4.5.4"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3"
   }
 }
