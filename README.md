@@ -1,4 +1,3 @@
-# backend_cw2
+# REST API for Literature Database
 
-## Back-end API server
-My submission for coursework 2 for 6003CEM.
+Secure RESTful API developed in Node.js using Koa and MySQL.
